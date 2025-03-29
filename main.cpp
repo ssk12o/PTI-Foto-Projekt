@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
     image.showHE();
     image.showCLAHE();
     image.showGC();
+    image.showBHE();
     
     waitKey(0);
     return 0;

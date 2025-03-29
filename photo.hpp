@@ -26,10 +26,16 @@ class Photo
         void show(string);
         void changeValue(Mat*, Mat);
         Mat apply_new_value(Mat);
+        int mediumValue();
+        void histSplit(Mat*, Mat*);
+        Mat histMerge(Mat, Mat);
+        void valueSplit(Mat*, Mat*);
+        Mat valueMerge(Mat, Mat);
 
         void showHist();
         void showHE();
         void showCLAHE();
+        void showBHE();
         void showGC(float gamma = 0.8);
         void showMBOBHE();
         void showMSRCR();
@@ -37,6 +43,7 @@ class Photo
         Mat getHist();
         Mat getHE();
         Mat getCLAHE();
+        Mat getBHE();
         Mat getGC(float gamma = 0.8);
         Mat getMBOBHE();
         Mat getMSRCR();

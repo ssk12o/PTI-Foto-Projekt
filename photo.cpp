@@ -14,9 +14,12 @@ void Photo::calc(){
     calcValue();
 }
 void Photo::calcHsv(){
-    cvtColor(this->image, this->hsv, COLOR_BGR2HSV);
+    if(this->image.channels() == 3){
+        cvtColor(this->image, this->hsv, COLOR_BGR2HSV);
+    }
 }
 void Photo::calcValue(){
+    if(this->image.channels() == 1){ this->value = this->image; return; }
     Mat valueImg(this->hsv.rows, this->hsv.cols, CV_8UC1);
     for (int y = 0; y < this->hsv.rows; y++) {
         for (int x = 0; x < this->hsv.cols; x++) {
@@ -55,11 +58,70 @@ void Photo::changeValue(Mat *hsv, Mat value){
     }
 }
 Mat Photo::apply_new_value(Mat value){
+    if(this->image.channels() == 1) { return value;}
     Mat hsv_new = this->hsv;
     changeValue(&hsv_new, value);
     Mat image_new;
     cvtColor(hsv_new, image_new, COLOR_HSV2BGR);
     return image_new;
+}
+int Photo::mediumValue(){
+    int sum = 0;
+    for(int y = 0; y < image.rows; y++){
+        for(int x = 0; x < image.cols; x++){
+            sum += static_cast<int>(this->value.at<uchar>(y, x));
+        }
+    }
+    return sum/(image.rows*image.cols);
+}
+void Photo::histSplit(Mat* hist1, Mat* hist2){
+    Mat hist = this->getHist();
+    int size = hist.rows;
+    *hist1 = Mat::zeros(size, 1, CV_32F);
+    *hist2 = Mat::zeros(size, 1, CV_32F);
+    int threshold = this->mediumValue();
+    
+    for(int i = 0; i < size; i++) {
+        if (i < threshold) {
+            (*hist1).at<float>(i) = hist.at<float>(i);
+        } else {
+            (*hist2).at<float>(i) = hist.at<float>(i);
+        }
+    }
+}
+Mat Photo::histMerge(Mat hist1, Mat hist2){
+    Mat hist(hist1.rows, 1, CV_32F);
+    for(int i = 0; i < hist1.rows; i++) {
+        hist.at<float>(i) = hist1.at<float>(i) + hist2.at<float>(i); 
+    }
+    return hist;
+}
+void Photo::valueSplit(Mat* value1, Mat* value2){
+    *value1 = Mat::zeros(value.rows, value.cols, CV_8UC1);
+    *value2 = Mat::zeros(value.rows, value.cols, CV_8UC1);
+
+    int threshold = this->mediumValue();
+
+    for (int y = 0; y < this->image.rows; y++) {
+        for (int x = 0; x < this->image.cols; x++) {
+            int intensity = static_cast<int>(this->value.at<uchar>(y, x));
+            if(intensity < threshold){
+                (*value1).at<uchar>(y, x) = static_cast<uchar>(intensity);
+            } else {
+                (*value2).at<uchar>(y, x) = static_cast<uchar>(intensity);
+            }
+        }
+    }
+}
+Mat Photo::valueMerge(Mat value1, Mat value2){
+    Mat value(value1.rows, value1.cols, CV_8UC1);
+    for(int y = 0; y < this->image.rows; y++) {
+        for(int x = 0; x < this->image.cols; x++) {
+            int sum = static_cast<int>(value1.at<uchar>(y, x)) + static_cast<int>(value2.at<uchar>(y, x));
+            value.at<uchar>(y, x) = static_cast<uchar>(sum);
+        }
+    }
+    return value;
 }
 
 void Photo::showHist(){
@@ -94,6 +156,11 @@ void Photo::showCLAHE(){
     namedWindow("CLAHE image", WINDOW_NORMAL);
     resizeWindow("CLAHE image", 600, 450);
     imshow("CLAHE image", this->getCLAHE());
+}
+void Photo::showBHE(){
+    namedWindow("BHE image", WINDOW_NORMAL);
+    resizeWindow("BHE image", 600, 450);
+    imshow("BHE image", this->getBHE());
 }
 void Photo::showGC(float gamma){
     namedWindow("GC image", WINDOW_NORMAL);
@@ -134,6 +201,17 @@ Mat Photo::getCLAHE(){
 
     return this->apply_new_value(value_CLAHE);
 }
+Mat Photo::getBHE(){
+    Mat value1, value2;
+    this->valueSplit(&value1, &value2);
+
+    Photo img1(value1);
+    Photo img2(value2);
+    Mat clahe1 = img1.getCLAHE();
+    Mat clahe2 = img2.getCLAHE();
+
+    return this->valueMerge(clahe1, clahe2);
+}
 Mat Photo::getGC(float gamma){
     Mat value_GC = this->value;
     for (int y = 0; y < this->image.rows; y++){
@@ -146,6 +224,7 @@ Mat Photo::getGC(float gamma){
 
     return this->apply_new_value(value_GC);
 }
+
 // Mat Photo::getMBOBHE(){}
 // Mat Photo::getMSRCR(){}
 
