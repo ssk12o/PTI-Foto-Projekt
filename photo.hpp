@@ -31,6 +31,8 @@ class Photo
         Mat histMerge(Mat, Mat);
         void valueSplit(Mat*, Mat*);
         Mat valueMerge(Mat, Mat);
+        int countNoise();
+        Mat getNR(int ind = 0);
 
         void showHist();
         void showHE();
@@ -39,6 +41,7 @@ class Photo
         void showGC(float gamma = 0.8);
         void showMBOBHE();
         void showMSRCR();
+        void showNR();
         
         Mat getHist();
         Mat getHE();
