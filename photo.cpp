@@ -123,6 +123,69 @@ Mat Photo::valueMerge(Mat value1, Mat value2){
     }
     return value;
 }
+int Photo::countNoise(){
+    Mat blurred;
+    medianBlur(this->value, blurred, 3);
+
+    Mat diff;
+    absdiff(this->value, blurred, diff);
+
+    Mat mask;
+    threshold(diff, mask, 60, 255, THRESH_BINARY);
+
+    int sum = 0;
+
+    for(int y = 0; y < this->value.rows; y++){
+        for(int x = 0; x < this->value.cols; x++){
+            if(static_cast<int>(mask.at<uchar>(y, x)) == 255){
+                sum++;
+            }
+        }
+    }
+
+    return sum;
+}
+Mat Photo::getNR(int ind){
+    if(ind == 2){return this->value;}
+
+    Mat blurred;
+    medianBlur(this->value, blurred, 3);
+
+    Mat diff;
+    absdiff(this->value, blurred, diff);
+
+    Mat mask;
+    threshold(diff, mask, 40, 255, THRESH_BINARY);
+
+    Mat valueNR = this->value;
+    int k = 15;
+    for(int y = 0; y < this->value.rows; y++){
+        for(int x = 0; x < this->value.cols; x++){
+            valueNR.at<uchar>(y, x) = this->value.at<uchar>(y, x);
+            if(static_cast<int>(mask.at<uchar>(y, x)) == 255){
+                int sum = 0;
+                int n = 0;
+                for(int i = -k; i <= k; i++){
+                    for(int j = -k; j <= k; j++){
+                        if(y + j >= valueNR.rows || y + j < 0 || x + i >= valueNR.cols || x + i < 0) { continue; }
+                        if(static_cast<int>(mask.at<uchar>(y + j, x + i)) == 255) { continue; }
+                        sum += static_cast<int>(valueNR.at<uchar>(y + j, x + i));
+                        n++;
+                    }
+                }
+                if (n == 0) { valueNR.at<uchar>(y, x) = static_cast<uchar>(128); continue; }
+                int av = sum / n;
+                valueNR.at<uchar>(y, x) = static_cast<uchar>(av);
+            }
+        }
+    }
+
+    Photo cleaned(valueNR);
+    //morphologyEx(valueNR, cleaned, MORPH_OPEN, Mat(), Point(-1, -1), 1);
+    //morphologyEx(cleaned, cleaned, MORPH_CLOSE, Mat(), Point(-1, -1), 2);
+    ind++;
+    return cleaned.getNR(ind);
+}
 
 void Photo::showHist(){
     Mat hist = this->getHist();
@@ -172,6 +235,11 @@ void Photo::showMBOBHE(){
 }
 void Photo::showMSRCR(){
 
+}
+void Photo::showNR(){
+    namedWindow("NR image", WINDOW_NORMAL);
+    resizeWindow("NR image", 600, 450);
+    imshow("NR image", this->getNR());
 }
 
 Mat Photo::getHist(){
