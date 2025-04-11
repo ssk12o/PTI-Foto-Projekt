@@ -123,7 +123,7 @@ Mat Photo::valueMerge(Mat value1, Mat value2){
     }
     return value;
 }
-int Photo::countNoise(){
+Mat Photo::getMask(int thresh){
     Mat blurred;
     medianBlur(this->value, blurred, 3);
 
@@ -131,8 +131,12 @@ int Photo::countNoise(){
     absdiff(this->value, blurred, diff);
 
     Mat mask;
-    threshold(diff, mask, 40, 255, THRESH_BINARY);
+    threshold(diff, mask, thresh, 255, THRESH_BINARY);
 
+    return mask;
+}
+int Photo::countNoise(){
+    Mat mask = this->getMask(40).clone();
     int sum = 0;
 
     for(int y = 0; y < this->value.rows; y++){
@@ -145,48 +149,15 @@ int Photo::countNoise(){
 
     return sum;
 }
-Mat Photo::getNR(int count){
-    if(count == 0){return this->value;}
+Mat Photo::countNoiseOnLightBackground(){
 
-    Mat blurred;
-    medianBlur(this->value, blurred, 3);
+    Photo gc(this->getGC(1.9));
 
-    Mat diff;
-    absdiff(this->value, blurred, diff);
-
-    Mat mask;
-    threshold(diff, mask, 40, 255, THRESH_BINARY);
-
-
-
-    Mat valueNR = this->value.clone();
-    int k = 15;
-    for(int y = 0; y < this->value.rows; y++){
-        for(int x = 0; x < this->value.cols; x++){
-            valueNR.at<uchar>(y, x) = this->value.at<uchar>(y, x);
-            if(static_cast<int>(mask.at<uchar>(y, x)) == 255){
-                int sum = 0;
-                int n = 0;
-                for(int i = -k; i <= k; i++){
-                    for(int j = -k; j <= k; j++){
-                        if(y + j >= valueNR.rows || y + j < 0 || x + i >= valueNR.cols || x + i < 0) { continue; }
-                        if(static_cast<int>(mask.at<uchar>(y + j, x + i)) == 255) { continue; }
-                        sum += static_cast<int>(valueNR.at<uchar>(y + j, x + i));
-                        n++;
-                    }
-                }
-                if (n == 0) { valueNR.at<uchar>(y, x) = static_cast<uchar>(128); continue; }
-                int av = sum / n;
-                valueNR.at<uchar>(y, x) = static_cast<uchar>(av);
-            }
-        }
-    }
-
-    Photo cleaned(valueNR);
-
-    count--;
-    return cleaned.getNR(count);
+    Mat mask = gc.getMask(40).clone();
+    
+    return mask;
 }
+
 
 void Photo::showHist(){
     Mat hist = this->getHist();
@@ -231,16 +202,16 @@ void Photo::showGC(float gamma){
     resizeWindow("GC image", 600, 450);
     imshow("GC image", this->getGC(gamma));
 }
+void Photo::showNR(int count){
+    namedWindow("NR image", WINDOW_NORMAL);
+    resizeWindow("NR image", 600, 450);
+    imshow("NR image", this->getNR(count));
+}
 void Photo::showMBOBHE(){
 
 }
 void Photo::showMSRCR(){
 
-}
-void Photo::showNR(int count){
-    namedWindow("NR image", WINDOW_NORMAL);
-    resizeWindow("NR image", 600, 450);
-    imshow("NR image", this->getNR(count));
 }
 
 Mat Photo::getHist(){
@@ -293,7 +264,49 @@ Mat Photo::getGC(float gamma){
 
     return this->apply_new_value(value_GC);
 }
+Mat Photo::getNR(int count){
+    if(count == 0){return this->value;}
 
+    /* Mat blurred;
+    medianBlur(this->value, blurred, 3);
+
+    Mat diff;
+    absdiff(this->value, blurred, diff);
+
+    Mat mask;
+    threshold(diff, mask, 40, 255, THRESH_BINARY); */
+    
+    Mat mask = this->getMask().clone();
+
+
+    Mat valueNR = this->value.clone();
+    int k = 15;
+    for(int y = 0; y < this->value.rows; y++){
+        for(int x = 0; x < this->value.cols; x++){
+            valueNR.at<uchar>(y, x) = this->value.at<uchar>(y, x);
+            if(static_cast<int>(mask.at<uchar>(y, x)) == 255){
+                int sum = 0;
+                int n = 0;
+                for(int i = -k; i <= k; i++){
+                    for(int j = -k; j <= k; j++){
+                        if(y + j >= valueNR.rows || y + j < 0 || x + i >= valueNR.cols || x + i < 0) { continue; }
+                        if(static_cast<int>(mask.at<uchar>(y + j, x + i)) == 255) { continue; }
+                        sum += static_cast<int>(valueNR.at<uchar>(y + j, x + i));
+                        n++;
+                    }
+                }
+                if (n == 0) { valueNR.at<uchar>(y, x) = static_cast<uchar>(128); continue; }
+                int av = sum / n;
+                valueNR.at<uchar>(y, x) = static_cast<uchar>(av);
+            }
+        }
+    }
+
+    Photo cleaned(valueNR);
+
+    count--;
+    return cleaned.getNR(count);
+}
 // Mat Photo::getMBOBHE(){}
 // Mat Photo::getMSRCR(){}
 

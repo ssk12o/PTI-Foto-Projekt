@@ -31,23 +31,26 @@ class Photo
         Mat histMerge(Mat, Mat);
         void valueSplit(Mat*, Mat*);
         Mat valueMerge(Mat, Mat);
+        Mat getMask(int thresh = 60);
         int countNoise();
-        Mat getNR(int count = 5);
+        Mat countNoiseOnLightBackground();
+        
 
         void showHist();
         void showHE();
         void showCLAHE();
         void showBHE();
         void showGC(float gamma = 0.8);
+        void showNR(int count = 5);
         void showMBOBHE();
         void showMSRCR();
-        void showNR(int count = 5);
         
         Mat getHist();
         Mat getHE();
         Mat getCLAHE();
         Mat getBHE();
         Mat getGC(float gamma = 0.8);
+        Mat getNR(int count = 5);
         Mat getMBOBHE();
         Mat getMSRCR();
 };
