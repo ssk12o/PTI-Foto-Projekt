@@ -32,7 +32,7 @@ class Photo
         void valueSplit(Mat*, Mat*);
         Mat valueMerge(Mat, Mat);
         int countNoise();
-        Mat getNR(int ind = 0);
+        Mat getNR(int count = 5);
 
         void showHist();
         void showHE();
@@ -41,7 +41,7 @@ class Photo
         void showGC(float gamma = 0.8);
         void showMBOBHE();
         void showMSRCR();
-        void showNR();
+        void showNR(int count = 5);
         
         Mat getHist();
         Mat getHE();

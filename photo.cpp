@@ -19,14 +19,14 @@ void Photo::calcHsv(){
     }
 }
 void Photo::calcValue(){
-    if(this->image.channels() == 1){ this->value = this->image; return; }
+    if(this->image.channels() == 1){ this->value = this->image.clone(); return; }
     Mat valueImg(this->hsv.rows, this->hsv.cols, CV_8UC1);
     for (int y = 0; y < this->hsv.rows; y++) {
         for (int x = 0; x < this->hsv.cols; x++) {
             valueImg.at<uchar>(y, x) = this->hsv.at<Vec3b>(y, x)[2];
         }
     }
-    this->value = valueImg;
+    this->value = valueImg.clone();
 }
 
 Mat Photo::get_image(){
@@ -59,7 +59,7 @@ void Photo::changeValue(Mat *hsv, Mat value){
 }
 Mat Photo::apply_new_value(Mat value){
     if(this->image.channels() == 1) { return value;}
-    Mat hsv_new = this->hsv;
+    Mat hsv_new = this->hsv.clone();
     changeValue(&hsv_new, value);
     Mat image_new;
     cvtColor(hsv_new, image_new, COLOR_HSV2BGR);
@@ -75,7 +75,7 @@ int Photo::mediumValue(){
     return sum/(image.rows*image.cols);
 }
 void Photo::histSplit(Mat* hist1, Mat* hist2){
-    Mat hist = this->getHist();
+    Mat hist = this->getHist().clone();
     int size = hist.rows;
     *hist1 = Mat::zeros(size, 1, CV_32F);
     *hist2 = Mat::zeros(size, 1, CV_32F);
@@ -131,7 +131,7 @@ int Photo::countNoise(){
     absdiff(this->value, blurred, diff);
 
     Mat mask;
-    threshold(diff, mask, 60, 255, THRESH_BINARY);
+    threshold(diff, mask, 40, 255, THRESH_BINARY);
 
     int sum = 0;
 
@@ -145,8 +145,8 @@ int Photo::countNoise(){
 
     return sum;
 }
-Mat Photo::getNR(int ind){
-    if(ind == 2){return this->value;}
+Mat Photo::getNR(int count){
+    if(count == 0){return this->value;}
 
     Mat blurred;
     medianBlur(this->value, blurred, 3);
@@ -157,7 +157,9 @@ Mat Photo::getNR(int ind){
     Mat mask;
     threshold(diff, mask, 40, 255, THRESH_BINARY);
 
-    Mat valueNR = this->value;
+
+
+    Mat valueNR = this->value.clone();
     int k = 15;
     for(int y = 0; y < this->value.rows; y++){
         for(int x = 0; x < this->value.cols; x++){
@@ -181,10 +183,9 @@ Mat Photo::getNR(int ind){
     }
 
     Photo cleaned(valueNR);
-    //morphologyEx(valueNR, cleaned, MORPH_OPEN, Mat(), Point(-1, -1), 1);
-    //morphologyEx(cleaned, cleaned, MORPH_CLOSE, Mat(), Point(-1, -1), 2);
-    ind++;
-    return cleaned.getNR(ind);
+
+    count--;
+    return cleaned.getNR(count);
 }
 
 void Photo::showHist(){
@@ -236,10 +237,10 @@ void Photo::showMBOBHE(){
 void Photo::showMSRCR(){
 
 }
-void Photo::showNR(){
+void Photo::showNR(int count){
     namedWindow("NR image", WINDOW_NORMAL);
     resizeWindow("NR image", 600, 450);
-    imshow("NR image", this->getNR());
+    imshow("NR image", this->getNR(count));
 }
 
 Mat Photo::getHist(){
@@ -281,7 +282,7 @@ Mat Photo::getBHE(){
     return this->valueMerge(clahe1, clahe2);
 }
 Mat Photo::getGC(float gamma){
-    Mat value_GC = this->value;
+    Mat value_GC = this->value.clone();
     for (int y = 0; y < this->image.rows; y++){
         for (int x = 0; x < this->image.cols; x++){
             float i1 = static_cast<int>(this->value.at<uchar>(y, x));
