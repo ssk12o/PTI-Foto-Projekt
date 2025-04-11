@@ -31,10 +31,8 @@ class Photo
         Mat histMerge(Mat, Mat);
         void valueSplit(Mat*, Mat*);
         Mat valueMerge(Mat, Mat);
-        Mat getMask(int thresh = 60);
-        int countNoise();
-        Mat countNoiseOnLightBackground();
-        
+        Mat getMask();
+        int countNoise();        
 
         void showHist();
         void showHE();

@@ -123,20 +123,32 @@ Mat Photo::valueMerge(Mat value1, Mat value2){
     }
     return value;
 }
-Mat Photo::getMask(int thresh){
+Mat Photo::getMask(){
     Mat blurred;
     medianBlur(this->value, blurred, 3);
 
     Mat diff;
     absdiff(this->value, blurred, diff);
 
+    Mat mask1;
+    threshold(diff, mask1, 60, 255, THRESH_BINARY);
+
+    Photo gc(this->getGC(20));
+
+    medianBlur(gc.get_value(), blurred, 3);
+
+    absdiff(gc.get_value(), blurred, diff);
+
+    Mat mask2;
+    threshold(diff, mask2, 60, 255, THRESH_BINARY);
+
     Mat mask;
-    threshold(diff, mask, thresh, 255, THRESH_BINARY);
+    add(mask1, mask2, mask);
 
     return mask;
 }
 int Photo::countNoise(){
-    Mat mask = this->getMask(40).clone();
+    Mat mask = this->getMask().clone();
     int sum = 0;
 
     for(int y = 0; y < this->value.rows; y++){
@@ -149,15 +161,6 @@ int Photo::countNoise(){
 
     return sum;
 }
-Mat Photo::countNoiseOnLightBackground(){
-
-    Photo gc(this->getGC(1.9));
-
-    Mat mask = gc.getMask(40).clone();
-    
-    return mask;
-}
-
 
 void Photo::showHist(){
     Mat hist = this->getHist();
@@ -267,17 +270,7 @@ Mat Photo::getGC(float gamma){
 Mat Photo::getNR(int count){
     if(count == 0){return this->value;}
 
-    /* Mat blurred;
-    medianBlur(this->value, blurred, 3);
-
-    Mat diff;
-    absdiff(this->value, blurred, diff);
-
-    Mat mask;
-    threshold(diff, mask, 40, 255, THRESH_BINARY); */
-    
     Mat mask = this->getMask().clone();
-
 
     Mat valueNR = this->value.clone();
     int k = 15;
