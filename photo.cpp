@@ -268,7 +268,7 @@ Mat Photo::getGC(float gamma){
     return this->apply_new_value(value_GC);
 }
 Mat Photo::getNR(int count){
-    if(count == 0){return this->value;}
+    if(count == 0){return this->image;}
 
     Mat mask = this->getMask().clone();
 
@@ -295,7 +295,7 @@ Mat Photo::getNR(int count){
         }
     }
 
-    Photo cleaned(valueNR);
+    Photo cleaned(this->apply_new_value(valueNR));
 
     count--;
     return cleaned.getNR(count);
