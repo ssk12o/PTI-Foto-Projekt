@@ -15,6 +15,7 @@
 \usepackage{enumitem}
 
 
+
 \usepackage{caption}    
 \usepackage{float}      
 
@@ -95,73 +96,90 @@ Przykładem takiej osoby jest nasza koleżanka Ola -- wraz z jej rodzinnym album
 Wykonywanie, a następnie `ucyfrowienie' zdjęcia w technice analogowej wiąże się z różnymi trudnościami,
 które mogą znacząco obniżyć jakość zdjęcia -- a z tym satysfakcje jego posiadacza. Głównymi problemami
 którym będziemy przeciwdziałać będą niedoświetlenie zdjęcia i zanieczyszczenia powietrza osadzające
-się na oryginalnym zdjęciu i skanerze podczas procesu `ucyfrowienia' go.
+się na oryginalnym zdjęciu i skanerze podczas procesu zmiany informacji z analogowej na cyfrową.
 
-\subsection{Niedoświetlenie} % tak wiem bartek bedziesz krzyczal. ale poezja to poezja, e viva latre
+\subsection{Niedoświetlenie} % tak wiem bartek bedziesz krzyczał. ale poezja to poezja, e viva latre
 Niedoświetlenie jest problemem trudnym -- zwłaszcza dla fanów-amatorów techniki analogowej.
 Zasadnicza większość klasycznych aparatów nie posiada zaawansowanej mechaniki automatycznie wybierającej
 odpowiednie ustawienia aparatu, a brak możliwości podglądu tego, jak dane zdjęcie wyszło często doprowadza
 do sytuacji, gdzie po wielu dniach okazuje się, że na zdjęciu chwili którą fotograf chciał uchwycić i utrwalić
 niewiele widać, bo przez złe ustawienia większość szczegółów jest niewidoczna...\footnote{Jest to problem który szeroko
     wraz z przykładami i analizą numeryczną opisywaliśmy w raporcie pierwszym.}
+
 Dla przykładu przypomnijmy:
 \newpage
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{Zdjęcie niedoświetlone}
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos/doswietlone_i_nie/analog6.jpg}
+    \caption{Zdjęcie niedoświetlone.}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{I prześwietlone}
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos/doswietlone_i_nie/analog7.jpg}
+    \caption{...i to w punkt.}
 \end{figure}
 
 
 \subsection{Zanieczyszczenia}
-Prawie że cała nasza\footnote{nie jesteśmy wszak ani naukowcami, ani lekarzami, ani ciężko chorymi. /j} codzienność
+Prawie że cała nasza\footnote{nie jesteśmy wszak ani naukowcami, ani lekarzami.} codzienność
 dzieje sie w niesterylnych warunkach. I jakkolwiek dla większości z nas nie jest to problem, są miejsca i sytuacje
-gdy prowadzi to do pewnych problemów. W powietrzu nas otaczająym jest pełno unoszących się zanieczyszczeń: włosów, kurzu, futra etc.
+gdy prowadzi to do pewnych problemów. W powietrzu nas otaczającym jest pełno unoszących się zanieczyszczeń: włosów, kurzu, futra etc.
 
-Problematyczne jest natomiast osadzanie się wspomnianje powyżej materii na zdjęciach i soczewkach -- która przenosi się na
+Problematyczne jest natomiast osadzanie się wspomnianej powyżej materii na zdjęciach i soczewkach -- która przenosi się na
 skan tworząc nieestetyczne artefakty:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{W skrajnych wypadkach może wyglądać to nawet tak}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/gpt3.png}
+    \caption{W skrajnych wypadkach może wyglądać to nawet tak.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{Choć bardziej częstym jest ten przypadek}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/new1.jpeg}
+    \caption{Choć bardziej częstym jest ten przypadek.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{A także taki}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/new2.jpeg}
+    \caption{A także taki.}
 \end{figure}
 
 
-\section{Program}
+\section{Program i jego działanie}
 Zbrojni w wiedzę co chcemy osiągnąć i zapas zebranych skanów zdjęć do testów wzielismy się do pracy
-nad programem.
+nad programem. Stworzyliśmy zaawansowany program który który w przypadku funkcjonalności
+`anty--zanieczyszczeniowej' inteligentnie przeszukuje cały obszar zdjęcia, zaznacza artefakty,
+a w następnej fazie działania usuwa je.
 
-\subsection{Yapping techniczny w subsekcjach}
-bla bla bla bla bla bla
+Przechodząc do szczegółów, działanie programu można opisać za pomocą kilku kolejnych faz działania\footnote{Algorytm 
+    przekształca zdjęcie z formatu RGB do formatu HSV (Hue, Saturation, Value) i działa tylko na Value, która definiuje jasność piksela w skali 0-255.}
 
+\subsection{Rozmycia Gaussowskie}
+
+\subsection{Wyszukiwanie kontrastu}
+
+\subsection{Tworzenie maski}
+
+\subsection{Korekcja gamma}
 
 
 
 
 
 \section{Dostępność programu}
-Nasz program jest programem terminalowym działającym na systemie nie starszym niż Windows 10.
+Na chwilę obecną nasze rozwiązanie jest programem terminalowym
+działającym na systemie nie starszym niż Windows 10 -- choć istnieje
+plan przeniesienia go także na inne popularne systemy operacyjne.
 
-Program dostępny jest dostępny na licencji \textit{bla bla} i można go znaleźć na GitHubie
-pod adresem \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+Tak samo pracujemy obecnie nad stworzeniem bardziej przystępnego interfejsu okienkowego.
+
+Program dostępny jest dostępny na licencji \textit{open source} i jego kod źródłowy znaleźć na GitHubie
+pod adresem:
+\begin{center}
+    \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+\end{center}
 
 
 
@@ -171,13 +189,14 @@ pod adresem \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
 W tej części naszego projektu korzystaliśmy z następujących narzędzi:
 \begin{itemize}
     \item Programu i języka Matlab -- do analizy zdjęć;
-    \item Języka c++ -- do napisania programu;
-    \item Skanera minilab Noritsu HS-1800 -- do wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
+    \item Języka C++ -- do napisania programu;
+    \item Programu VS Code -- do tworzenia, edycji i dokumentacji kodu programu i raportów;
     \item Programu LibreOffice Calc -- do analizy części danych numerycznych;
     \item $\LaTeXe{}$ -- do przygotowania raportu;
-    \item Google Drive -- do udostępniania plików;
-    \item Github -- do udostępniania i pracy nad kodem;
+    \item Strony Github i programu Git -- do udostępniania, dystrybucji i pracy nad kodem;
     \item 7zip -- do kompresji zdjęć;
+    \item Google Drive -- do udostępniania plików;
+    \item Skanera minilab Noritsu HS-1800 -- do wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
     \item Aparatów:
           \begin{itemize}
               \item Canon EOS 300 z obiektywem Tamron 28-105mm 1:4-5.6 i kliszą Fomapan 400
@@ -198,6 +217,28 @@ Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w nast
     \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
     \item Filip Sajko -- pisanie raportu, implementacja w \LaTeX{}.
 \end{itemize}
+
+
+%                       Wersja alternatywna podziału obowiązków
+% \section{Podział obowiązków}
+% Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
+% 
+% \begin{table}[h!]
+%     \centering
+%     \renewcommand{\arraystretch}{1.3}
+%     \begin{tabular}{|p{3cm}|p{7.5cm}|} \hline
+%         \textbf{Imię i nazwisko} & \textbf{Zakres obowiązków}                                                               \\ \hline \hline
+%         Bartosz Wójcik           & Wykonywanie, skanowanie i analiza zdjęć; opieka merytoryczna.                            \\ \hline
+%         Katarzyna Szwed          & Tworzenie, analizowanie i pisanie algorytmu; korekta raportu.                            \\ \hline
+%         Natalia Szymańska        & Pisanie raportu.                                                                         \\ \hline
+%         Patrycja Szałajko        & Zarządzanie pracą zespołu, kontakt z mediami.                                            \\ \hline
+%         Aleksandra Wójcik        & Skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu. \\ \hline
+%         Karol Sęk                & Tworzenie, analizowanie i pisanie algorytmu.                                             \\ \hline
+%         Michał Juszkiewicz       & Tworzenie, analizowanie i pisanie algorytmu.                                             \\ \hline
+%         Filip Sajko              & Pisanie raportu, implementacja w \LaTeX{}.                                               \\ \hline
+%     \end{tabular}
+%     \caption{Podział obowiązków w zespole projektowym.}
+% \end{table}
 
 
 
