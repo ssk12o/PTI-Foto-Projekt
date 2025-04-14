@@ -34,14 +34,14 @@ class Photo
         Mat getMask();
         int countNoise();        
 
-        void showHist();
-        void showHE();
-        void showCLAHE();
-        void showBHE();
-        void showGC(float gamma = 0.8);
-        void showNR(int count = 5);
-        void showMBOBHE();
-        void showMSRCR();
+        void showHist(string title = "Histogram");
+        void showHE(string title = "HE image");
+        void showCLAHE(string title = "CLAHE image");
+        void showBHE(string title = "BHE image");
+        void showGC(float gamma = 0.8, string title = "GC image");
+        void showNR(int count = 5, string title = "NR image");
+        void showMBOBHE(string title = "MBOBHE image");
+        void showMSRCR(string title = "MSRCR image");
         
         Mat getHist();
         Mat getHE();

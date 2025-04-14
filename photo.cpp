@@ -162,7 +162,7 @@ int Photo::countNoise(){
     return sum;
 }
 
-void Photo::showHist(){
+void Photo::showHist(string title){
     Mat hist = this->getHist();
     int histSize = 256;
     int hist_w = 512; 
@@ -182,38 +182,38 @@ void Photo::showHist(){
             1, 8, 0);
     }
 
-    imshow("Histogram", histImage);
+    imshow(title, histImage);
 
 }
-void Photo::showHE(){
-    namedWindow("HE image", WINDOW_NORMAL);
-    resizeWindow("HE image", 600, 450);
-    imshow("HE image", this->getHE());
+void Photo::showHE(string title){
+    namedWindow(title, WINDOW_NORMAL);
+    resizeWindow(title, 600, 450);
+    imshow(title, this->getHE());
 }
-void Photo::showCLAHE(){
-    namedWindow("CLAHE image", WINDOW_NORMAL);
-    resizeWindow("CLAHE image", 600, 450);
-    imshow("CLAHE image", this->getCLAHE());
+void Photo::showCLAHE(string title){
+    namedWindow(title, WINDOW_NORMAL);
+    resizeWindow(title, 600, 450);
+    imshow(title, this->getCLAHE());
 }
-void Photo::showBHE(){
-    namedWindow("BHE image", WINDOW_NORMAL);
-    resizeWindow("BHE image", 600, 450);
-    imshow("BHE image", this->getBHE());
+void Photo::showBHE(string title){
+    namedWindow(title, WINDOW_NORMAL);
+    resizeWindow(title, 600, 450);
+    imshow(title, this->getBHE());
 }
-void Photo::showGC(float gamma){
-    namedWindow("GC image", WINDOW_NORMAL);
-    resizeWindow("GC image", 600, 450);
-    imshow("GC image", this->getGC(gamma));
+void Photo::showGC(float gamma, string title){
+    namedWindow(title, WINDOW_NORMAL);
+    resizeWindow(title, 600, 450);
+    imshow(title, this->getGC(gamma));
 }
-void Photo::showNR(int count){
-    namedWindow("NR image", WINDOW_NORMAL);
-    resizeWindow("NR image", 600, 450);
-    imshow("NR image", this->getNR(count));
+void Photo::showNR(int count, string title){
+    namedWindow(title, WINDOW_NORMAL);
+    resizeWindow(title, 600, 450);
+    imshow(title, this->getNR(count));
 }
-void Photo::showMBOBHE(){
+void Photo::showMBOBHE(string title){
 
 }
-void Photo::showMSRCR(){
+void Photo::showMSRCR(string title){
 
 }
 
