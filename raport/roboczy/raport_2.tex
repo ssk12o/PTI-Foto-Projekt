@@ -26,9 +26,9 @@
 \pagestyle{fancy}
 \fancyhf{}
 
-\fancyhead[L]{\includegraphics[height=0.666cm]{logo_projektu.png}}
+\fancyhead[L]{\includegraphics[height=0.666cm]{wspolne_dla_wszystkich/logo_projektu.png}}
 \fancyhead[C]{\textit{Poprawa jakości zdjęć}}
-\fancyhead[R]{\includegraphics[height=0.9cm]{logo_uczelni.png}}
+\fancyhead[R]{\includegraphics[height=0.9cm]{wspolne_dla_wszystkich/logo_uczelni.png}}
 \fancyfoot[C]{\thepage}
 
 \setlength{\headheight}{20pt}  
@@ -46,7 +46,7 @@
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{logo_uczelni.png}
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_uczelni.png}
 \end{figure}
 
 
@@ -60,7 +60,7 @@
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{logo_projektu.png}
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_projektu.png}
 \end{figure}
 
 \vfill
@@ -111,12 +111,12 @@ Dla przykładu przypomnijmy:
 \newpage
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos/doswietlone_i_nie/analog6.jpg}
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos2/doswietlone_i_nie/analog6.jpg}
     \caption{Zdjęcie niedoświetlone.}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos/doswietlone_i_nie/analog7.jpg}
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos2/doswietlone_i_nie/analog7.jpg}
     \caption{...i to w punkt.}
 \end{figure}
 
@@ -131,19 +131,19 @@ skan tworząc nieestetyczne artefakty:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/gpt3.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt3.png}
     \caption{W skrajnych wypadkach może wyglądać to nawet tak.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/new1.jpeg}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/new1.jpeg}
     \caption{Choć bardziej częstym jest ten przypadek.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/new2.jpeg}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/new2.jpeg}
     \caption{A także taki.}
 \end{figure}
 
@@ -159,7 +159,7 @@ Przechodząc do szczegółów, działanie programu można opisać za pomocą kil
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt1.png}
     \caption{Przykładowe zdjęcie -- to za jego pomocą opiszemy działanie programu.}
 \end{figure}
 
@@ -175,11 +175,11 @@ Za pomocą funkcji danej wzorem dla każdego piksela:
 \begin{equation}
     G(x, y) = \frac{1}{2 \pi \sigma^2}e^{- \frac{x^2+y^2}{2\sigma^2}}
 \end{equation}
-gdzie $x$, $y$ to współrzędne danego pixel'a, a $\sigma$ oznacza odchylenie standardowe.\footnote{Źródło: \url{https://en.wikipedia.org/wiki/Gaussian_blur}}
+gdzie $x$, $y$ to współrzędne danego piksel'a, a $\sigma$ oznacza odchylenie standardowe.\footnote{Źródło: \url{https://en.wikipedia.org/wiki/Gaussian_blur}}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/gauss_blurr/gauss_blurr_gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/gauss_blurr/gauss_blurr_gpt1.png}
     \caption{Zdjęcie po wykonaniu rozmycia gaussowskiego.}
 \end{figure}
 
@@ -189,11 +189,11 @@ Pozwala to na wykrycie najbardziej kontrastowych elementów zdjęcia.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/difference/difference_gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/difference/difference_gpt1.png}
     \caption{Zdjęcie po wykonaniu różnicy.}
 \end{figure}
 
-\subsubsection{Usunięcie ciemnych pixeli}
+\subsubsection{Usunięcie ciemnych pikseli}
 Zostawiamy tylko jasne piksele (według standardowych ustawień jest
 to jasność powyżej 60) i nadajemy im maksymalną wartość 255.
 Pozostałym pikselom ustawiamy jasność na 0.
@@ -223,7 +223,7 @@ Działanie to pozwala uwzględnić jak najwięcej artefaktów
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/gamma_corection/gamma_corection_gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/gamma_corection/gamma_corection_gpt1.png}
     \caption{Po wykonaniu korekcji gamma i etapów 1-3.}
 \end{figure}
 
@@ -235,12 +235,12 @@ Końcową maskę otrzymujemy biorąc wszystkie znalezione piksele z obu podmasek
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/masks/final_mask_gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/masks/final_mask_gpt1.png}
     \caption{Maska wykonana z oganianego zdjęcia}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/masks/second(gc)_mask_gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/masks/second(gc)_mask_gpt1.png}
     \caption{Maska wykonana z zdjęcia rozświetlonego korekcją gamma}
 \end{figure}
 
@@ -256,8 +256,8 @@ wcześniej przez maskę.) pikseli na odległości nie więcej 15 od aktualnie an
 Wynik finalny:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/przed/gpt1.png}
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos/po/gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/po/gpt1.png}
     \caption{Przykładowe zdjęcie -- porównanie efektu przed i po.}
 
 \end{figure}

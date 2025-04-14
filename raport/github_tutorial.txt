@@ -1,0 +1,55 @@
+# GitHub Workflow for Contributing to a Public Repository
+To contribute to your tutor's public GitHub repository, here's the step-by-step procedure:
+## Basic Workflow Overview
+1. Fork the repository
+2. Clone your fork to your local machine
+3. Create a branch for your changes
+4. Make and commit your changes
+5. Push your branch to your fork
+6. Create a pull request
+## Detailed Steps
+### 1. Fork the Repository
+- Go to your tutor's repository on GitHub
+- Click the "Fork" button in the top-right corner
+- This creates a copy of the repository under your GitHub account
+### 2. Clone Your Fork
+```bash
+git clone https://github.com/YOUR-USERNAME/REPOSITORY-NAME.git
+cd REPOSITORY-NAME
+```
+### 3. Add the Original Repository as "Upstream"
+```bash
+git remote add upstream https://github.com/TUTORS-USERNAME/REPOSITORY-NAME.git
+```
+### 4. Create a Branch for Your Changes
+```bash
+git checkout -b your-branch-name
+```
+Choose a descriptive branch name related to your changes (e.g., `add-login-feature` or `fix-calculation-bug`)
+### 5. Make Your Changes
+Edit files, add new ones, etc.
+### 6. Commit Your Changes
+```bash
+git add .
+git commit -m "Descriptive commit message"
+```
+### 7. Push Your Branch to Your Fork
+```bash
+git push origin your-branch-name
+```
+### 8. Create a Pull Request
+- Go to your fork on GitHub
+- Click "Compare & pull request" button that appears
+- Add a title and description explaining your changes
+- Click "Create pull request"
+## Tips for Successful Contributions
+- Always pull the latest changes from upstream before starting new work:
+ ```bash
+ git checkout main
+ git pull upstream main
+ git checkout -b new-branch-name
+ ```
+- Keep your commits focused on single changes
+- Write clear commit messages
+- Follow any contribution guidelines your tutor has established
+Would you like more details about any specific part of this process?
