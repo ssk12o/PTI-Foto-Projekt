@@ -78,12 +78,21 @@
 
 \newpage
 
+% ADD KOREKTA
+\section{Korekta do raportu 1}
+\begin{itemize}
+    \item Do skanowania zdjęć w pierwszym etapie projektu użyty był skaner minilab Noritsu HS-1800.
+    \item Zdjęcia były robione przy różnych ustawieniach Exposure Value, za zdjęcia niedoświetlone uznaliśmy te robione przy EV-1, a za prześwietlone przy EV+1.
+    \item Również doprecyzowaliśmy tytuł projektu.
+\end{itemize}
+
+
 \section{Cel projektu}
 W związku ze słusznymi uwagami i wskazówkami, podjęliśmy decyzję o ukonkretyzowaniu celu naszego projektu.
 Skupimy się przede wszystkim na poprawianiu defektów cyfrowych skanów zdjęć analogowych.
-Staramy się trafić do dwóch (niekoniecznie rozłącznych) grup osób --
-współczesnych fanów fotografii analogowej (będącą dla amatora niełatwą sztuką) i posiadaczy pękatych
-archiwów zdjęć rodzinnych chcących je zachować i cyfrowo utrwalić.
+Na ten moment pracowaliśmy nad usuwaniem artefaktów powstałych w procesie wywoływania zdjęć i naprawianiem kontrastu zdjęć.
+Naszym celem jest zarówno naprawienie jakości starych zdjęć rodzinnych,
+jak i tych robionych przez współczesnych amatorów fotografii analogowej.
 
 \section{Zdjęcia, zdjęcia!}
 Profilowym zdjęciem dla nas jest portret -- tak indywidualny jak i grupowy.
@@ -91,8 +100,17 @@ Jest to typ zdjęć najbardziej popularny w rodzinnych albumach -- mnogość w n
 dla danej familli wydarzeń: chrztów, wesel czy pogrzebów... Służą one utrwaleniu wspomnień oraz pamięci
 po krewnych i bliskich, którzy już odeszli... A więc noszących dużą wartość emocjonalną dla ich posiadacza.
 
-Przykładem takiej osoby jest nasza koleżanka Ola -- wraz z jej rodzinnym albumem.
+Nasza koleżanka Ola odnalazła stary album rodzinny i zeskanowała znajdujące się w nim zdjęcia.
+Docelowo zajmiemy się naprawianiem skanów właśnie tych zdjęć.
+Często pojawiającymi się problemami wśród tych zdjęć są niedoświetlenie oraz zagięcia.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/STARE/Scan2025-04-14_101906.png}
+    \caption{Przykładowe zdjęcie z albumu, który można znaleźć \href{https://drive.google.com/drive/folders/1FME2DGxQ3jP6B-MKmGzHXzVHgdVP4-Fq}{tutaj!} }
+\end{figure}
+
+\newpage
 \section{Problemy}
 Wykonywanie, a następnie `ucyfrowienie' zdjęcia w technice analogowej wiąże się z różnymi trudnościami,
 które mogą znacząco obniżyć jakość zdjęcia -- a z tym satysfakcje jego posiadacza. Głównymi problemami,
@@ -104,8 +122,8 @@ Niedoświetlenie jest problemem trudnym -- zwłaszcza dla fanów-amatorów techn
 Zasadnicza większość klasycznych aparatów nie posiada zaawansowanej mechaniki automatycznie wybierającej
 odpowiednie ustawienia aparatu, a brak możliwości podglądu tego, jak dane zdjęcie wyszło, często doprowadza
 do sytuacji, gdzie po wielu dniach okazuje się, że na zdjęciu chwili, którą fotograf chciał uchwycić i utrwalić,
-niewiele widać, bo przez złe ustawienia większość szczegółów jest niewidoczna...\footnote{Jest to problem, który szeroko
-    wraz z przykładami i analizą numeryczną opisywaliśmy w raporcie pierwszym.}
+niewiele widać, bo przez złe ustawienia większość szczegółów jest niewidoczna. Jest to problem, który szeroko
+wraz z przykładami i analizą numeryczną opisywaliśmy w raporcie pierwszym.
 
 Dla przykładu przypomnijmy:
 \newpage
@@ -120,18 +138,21 @@ Dla przykładu przypomnijmy:
     \caption{...i to w punkt.}
 \end{figure}
 
-\newpage
-\subsection{Zanieczyszczenia}
-Prawie że cała nasza\footnote{nie jesteśmy wszak ani naukowcami, ani lekarzami.} codzienność
-dzieje sie w niesterylnych warunkach. I jakkolwiek dla większości z nas nie jest to problem, są miejsca i sytuacje,
-gdy prowadzi to do pewnych problemów. W powietrzu nas otaczającym jest pełno unoszących się zanieczyszczeń: włosów, kurzu, futra etc.
 
-Problematyczne jest natomiast osadzanie się wspomnianej powyżej materii na zdjęciach i soczewkach -- która przenosi się na
-skan tworząc nieestetyczne artefakty:
+% REWORD THIS 
+
+\newpage
+\subsection{Artefakty}
+Artefakty na zdjęciach analogowych powstają ze względu na osadzanie się kurzu i innych zanieczyszczeń na wywołanej kliszy,
+a także przez jej zarysowanie.
+
+Przez to na negatywie powstają ciemne plamki, które w momencie powstawania odbitki z kolei zamieniają się w jasne plamy.
+
+Takie zjawisko można zaobserwować na poniższych zdjęciach:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt3.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/GRAYgpt3.png}
     \caption{W skrajnych wypadkach może wyglądać to nawet tak.}
 \end{figure}
 
@@ -150,18 +171,18 @@ skan tworząc nieestetyczne artefakty:
 \newpage
 \section{Program i jego działanie}
 Zbrojni w wiedzę co chcemy osiągnąć i zapas zebranych skanów zdjęć do testów wzięliśmy się do pracy
-nad programem. Stworzyliśmy zaawansowany program, który w przypadku funkcjonalności
-`anty--zanieczyszczeniowej' inteligentnie przeszukuje cały obszar zdjęcia, zaznacza artefakty,
-a w następnej fazie działania usuwa je.
+nad programem. Stworzyliśmy zaawansowany program, który inteligentnie przeszukuje cały obszar zdjęcia, zaznacza artefakty,
+a w następnej fazie działania usuwa je. Warto dodać, że algorytm przekształca zdjęcie z formatu RGB do formatu HSV (Hue, Saturation, Value) i działa tylko na Value,
+która definiuje jasność piksela w skali 0-255.
 
-Przechodząc do szczegółów, działanie programu można opisać za pomocą kilku kolejnych faz działania\footnote{Algorytm
-    przekształca zdjęcie z formatu RGB do formatu HSV (Hue, Saturation, Value) i działa tylko na Value, która definiuje jasność piksela w skali 0-255.} na przykładzie poniższego zdjęcia:
+Przechodząc do szczegółów, działanie programu można opisać za pomocą kilku kolejnych faz działania, na przykładzie poniższego zdjęcia:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt1.png}
     \caption{Przykładowe zdjęcie -- to za jego pomocą opiszemy działanie programu.}
 \end{figure}
+
 
 \subsection{Tworzenie maski}
 \subsubsection{Rozmycie gaussowskie}
@@ -277,15 +298,51 @@ i jakości zdjęcia -- za przykład funkcja: .countNoise()
 zlicza ilość wyznaczonych przez maskę pikseli -- które są uznane za zanieczyszczenia.
 
 
+\section{Program do zmiany kontrastu zdjęcia}
+Napisaliśmy też osobny program zmieniający kontrast obrazu.
+Użyliśmy języka Matlab ze względu na to, że umożliwia on łatwiejsze porównanie wyników ze względu na parametr gamma.
+Algorytm korzysta z korekcji gamma opisanej wcześniej w punkcie 4.1.4.
+
+\subsection{Kod}
+\begin{verbatim}
+g = imread("test_2.png");
+figure(1);
+tiledlayout(3,3)
+nexttile
+imshow(g);
+title("zdjęcie niezmienione")
+gamma = 0.25;
+for k=1:9
+    if gamma ~= 1
+        gout = double(g)/255;
+        gout = gout.^gamma;
+        gout = gout*255;
+        gout = uint8(gout);
+        nexttile
+        imshow(gout);
+        title(['gamma = ' num2str(gamma)]);
+    end
+    gamma = gamma + 0.25;
+end
+\end{verbatim}
+
+\newpage
+\subsection{Działanie programu ze względu na parametr gamma}
+%tutaj zdjęcie co wysłałam na discordzie
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{Photos2/porownanie.png}
+    \caption{Działanie programu dla różnych parametrów $\gamma$}
+\end{figure}
 
 
-
-\section{Dostępność programu}
+\section{Dalsze kroki}
 Na chwilę obecną nasze rozwiązanie jest programem terminalowym,
 działającym na systemie nie starszym niż Windows 10 -- choć istnieje
 plan przeniesienia go także na inne popularne systemy operacyjne.
 
-Tak samo pracujemy obecnie nad stworzeniem bardziej przystępnego interfejsu okienkowego.
+Tak samo pracujemy obecnie nad stworzeniem bardziej przystępnego interfejsu okienkowego, a przy tym
+planujemy integrację poszczególnych elementów programu. Zamierzamy również między innymi dodać funkcjonalność usuwającą widoczne zagięcia.
 
 Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
 pod adresem:
@@ -300,8 +357,8 @@ pod adresem:
 \section{Wykorzystywane narzędzia}
 W tej części naszego projektu korzystaliśmy z następujących narzędzi:
 \begin{itemize}
-    \item Programu i języka Matlab -- do analizy zdjęć;
-    \item Języka C++ -- do napisania programu;
+    \item Programu i języka Matlab -- do analizy zdjęć i kontrastu;
+    \item Języka C++ -- do napisania programu usuwającego artefakty;
     \item Programu VS Code -- do tworzenia, edycji i dokumentacji kodu programu i raportów;
     \item Programu LibreOffice Calc -- do analizy części danych numerycznych;
     \item $\LaTeXe{}$ -- do przygotowania raportu;
@@ -320,10 +377,10 @@ W tej części naszego projektu korzystaliśmy z następujących narzędzi:
 \section{Podział obowiązków}
 Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
 \begin{itemize}
-    \item Bartosz Wójcik -- wykonywanie, skanowanie i analiza zdjęć; opieka merytoryczna.
-    \item Katarzyna Szwed -- tworzenie, analizowanie i pisanie algorytmu; korekta raportu.
+    \item Bartosz Wójcik -- wykonywanie, skanowanie i analiza zdjęć; research.
+    \item Katarzyna Szwed -- korekta raportu; tworzenie, analizowanie i pisanie algorytmu.
     \item Natalia Szymańska -- pisanie raportu.
-    \item Patrycja Szałajko -- zarządzanie pracą zespołu, kontakt z mediami.
+    \item Patrycja Szałajko -- zarządzanie pracą zespołu, kontakt.
     \item Aleksandra Wójcik -- skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu.
     \item Karol Sęk -- tworzenie, analizowanie i pisanie algorytmu.
     \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
