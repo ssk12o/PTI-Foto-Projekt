@@ -1,8 +1,9 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include "photo.hpp"
+#include "hnorm.hpp"
 
+using namespace std;
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
@@ -14,8 +15,25 @@ int main(int argc, char* argv[]) {
     string output = argv[2];
 
     Photo image(input);    
+    Mat fixed;
+    char read;
     
-    imwrite(output, image.getNR());
+    cout << "Wybierz operacje:\n1 - usuwanie farfocli\n2 - normalizacja histogramu jasnosci\n";
+    cin >> read;
+    switch (read) {
+
+        case '1':
+            fixed = image.getNR();
+            break;
+        case '2':
+            fixed = getHnorm(image);
+            break;
+        default:
+            break;
+    }
+
+    
+    imwrite(output, fixed);
 
     waitKey(0);
     return 0;
