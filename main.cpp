@@ -17,6 +17,7 @@ int main(int argc, char* argv[]) {
     Photo image(input);    
     Mat fixed;
     char read;
+    bool skip = false;
     
     cout << "Wybierz operacje:\n1 - usuwanie farfocli\n2 - normalizacja histogramu jasnosci\n";
     cin >> read;
@@ -29,11 +30,12 @@ int main(int argc, char* argv[]) {
             fixed = getHnorm(image);
             break;
         default:
+            skip = true;
             break;
     }
-
+    if(!skip)
+        imwrite(output, fixed);    
     
-    imwrite(output, fixed);
 
     waitKey(0);
     return 0;
