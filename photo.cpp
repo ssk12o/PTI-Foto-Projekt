@@ -123,9 +123,9 @@ Mat Photo::valueMerge(Mat value1, Mat value2){
     }
     return value;
 }
-Mat Photo::getMask(){
+Mat Photo::getMask(int k){
     Mat blurred;
-    medianBlur(this->value, blurred, 3);
+    medianBlur(this->value, blurred, k);
 
     Mat diff;
     absdiff(this->value, blurred, diff);
@@ -135,7 +135,7 @@ Mat Photo::getMask(){
 
     Photo gc(this->getGC(20));
 
-    medianBlur(gc.get_value(), blurred, 3);
+    medianBlur(gc.get_value(), blurred, k);
 
     absdiff(gc.get_value(), blurred, diff);
 
@@ -147,8 +147,8 @@ Mat Photo::getMask(){
 
     return mask;
 }
-int Photo::countNoise(){
-    Mat mask = this->getMask().clone();
+int Photo::countNoise(int k){
+    Mat mask = this->getMask(k).clone();
     int sum = 0;
 
     for(int y = 0; y < this->value.rows; y++){
@@ -160,6 +160,42 @@ int Photo::countNoise(){
     }
 
     return sum;
+}
+int Photo::getAverage(int x, int y, int k, Mat img){
+    int sum = 0;
+    int n = 0;
+    for(int i = -k; i <= k; i++){
+        for(int j = -k; j <= k; j++){
+            if(y + j >= img.rows || y + j < 0 || x + i >= img.cols || x + i < 0 || (i == 0 && j == 0)) { continue; }
+            sum += static_cast<int>(img.at<uchar>(y + j, x + i));
+            n++;
+        }
+    }
+    return sum / n;
+}
+Mat Photo::temp(int k, int p){
+    Mat res = this->value.clone();
+    for(int y = 0; y < this->value.rows; y++){
+        for(int x = 0; x < this->value.cols; x++){
+            int av = this->getAverage(x, y, k, this->value);
+            if(static_cast<int>(this->value.at<uchar>(y, x) - av > p)){
+                res.at<uchar>(y, x) = static_cast<uchar>(av);
+            }
+        }
+    }
+    return res;
+}
+int Photo::pix_difference(Mat other)
+{
+    int res = 0;
+    for(int y = 0; y < this->value.rows; y++){
+        for(int x = 0; x < this->value.cols; x++){
+            if(this->value.at<uchar>(y, x) != other.at<uchar>(y, x)){
+                res++;
+            }
+        }
+    }
+    return res;
 }
 
 void Photo::showHist(){
@@ -205,10 +241,10 @@ void Photo::showGC(float gamma){
     resizeWindow("GC image", 600, 450);
     imshow("GC image", this->getGC(gamma));
 }
-void Photo::showNR(int count){
-    namedWindow("NR image", WINDOW_NORMAL);
-    resizeWindow("NR image", 600, 450);
-    imshow("NR image", this->getNR(count));
+void Photo::showNR(int count, int k, string title){
+    namedWindow(title, WINDOW_NORMAL);
+    resizeWindow(title, 600, 450);
+    imshow(title, this->getNR(count, k));
 }
 void Photo::showMBOBHE(){
 
@@ -267,10 +303,10 @@ Mat Photo::getGC(float gamma){
 
     return this->apply_new_value(value_GC);
 }
-Mat Photo::getNR(int count){
+Mat Photo::getNR(int count, int h){
     if(count == 0){return this->value;}
 
-    Mat mask = this->getMask().clone();
+    Mat mask = this->getMask(h).clone();
 
     Mat valueNR = this->value.clone();
     int k = 15;

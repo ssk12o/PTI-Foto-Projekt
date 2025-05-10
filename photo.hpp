@@ -32,15 +32,18 @@ class Photo
         Mat histMerge(Mat, Mat);
         void valueSplit(Mat*, Mat*);
         Mat valueMerge(Mat, Mat);
-        Mat getMask();
-        int countNoise();        
+        Mat getMask(int k = 3);
+        int countNoise(int k = 3);  
+        int getAverage(int x, int y, int k, Mat img);  
+        Mat temp(int k, int p);  
+        int pix_difference(Mat other);  
 
         void showHist();
         void showHE();
         void showCLAHE();
         void showBHE();
         void showGC(float gamma = 0.8);
-        void showNR(int count = 5);
+        void showNR(int count = 5, int k = 3, string title = "NR image");
         void showMBOBHE();
         void showMSRCR();
         
@@ -49,7 +52,7 @@ class Photo
         Mat getCLAHE();
         Mat getBHE();
         Mat getGC(float gamma = 0.8);
-        Mat getNR(int count = 5);
+        Mat getNR(int count = 5, int k = 3);
         Mat getMBOBHE();
         Mat getMSRCR();
 };
