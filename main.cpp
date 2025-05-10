@@ -1,12 +1,14 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include <chrono>
 #include <thread>
 #include <filesystem>
 #include "photo.hpp"
+#include "hnorm.hpp"
+
 
 using namespace std::filesystem;
+
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {

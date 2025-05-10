@@ -13,6 +13,8 @@
 ]{graphicx}  
 \usepackage{url}
 \usepackage{enumitem}
+\usepackage{verbatim}
+
 
 
 \usepackage{caption}    
@@ -24,9 +26,9 @@
 \pagestyle{fancy}
 \fancyhf{}
 
-\fancyhead[L]{\includegraphics[height=0.666cm]{logo_projektu.png}}
+\fancyhead[L]{\includegraphics[height=0.666cm]{wspolne_dla_wszystkich/logo_projektu.png}}
 \fancyhead[C]{\textit{Poprawa jakości zdjęć}}
-\fancyhead[R]{\includegraphics[height=0.9cm]{logo_uczelni.png}}
+\fancyhead[R]{\includegraphics[height=0.9cm]{wspolne_dla_wszystkich/logo_uczelni.png}}
 \fancyfoot[C]{\thepage}
 
 \setlength{\headheight}{20pt}  
@@ -44,7 +46,7 @@
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{logo_uczelni.png}
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_uczelni.png}
 \end{figure}
 
 
@@ -58,12 +60,12 @@
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{logo_projektu.png}
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_projektu.png}
 \end{figure}
 
 \vfill
 \begin{abstract}
-    Raport 2 projektu poprawy jakości zdjęć wykonanych analogowych przez grupę wtorkową z godziny 18
+    Raport 2 projektu poprawy jakości cyfrowych skanów zdjęć wykonanych techniką analogową przez grupę nr 9 (wtorkową z godziny 18)
     w składzie:  Bartosz Wójcik, Katarzyna Szwed, Natalia Szymańska,
     Patrycja Szałajko, Aleksandra Wójcik, Karol Sęk, Michał Juszkiewicz, Filip Sajko.
 
@@ -76,92 +78,277 @@
 
 \newpage
 
+% ADD KOREKTA
+\section{Korekta do raportu 1}
+\begin{itemize}
+    \item Do skanowania zdjęć w pierwszym etapie projektu użyty był skaner minilab Noritsu HS-1800.
+    \item Zdjęcia były robione przy różnych ustawieniach Exposure Value, za zdjęcia niedoświetlone uznaliśmy te robione przy EV-1, a za prześwietlone przy EV+1.
+    \item Również doprecyzowaliśmy tytuł projektu.
+\end{itemize}
+
+
 \section{Cel projektu}
-W związku ze słusznymi uwagami i wskazówkami, podjelismy decyzję o ukonkretyzowaniu celu naszego projektu.
+W związku ze słusznymi uwagami i wskazówkami, podjęliśmy decyzję o ukonkretyzowaniu celu naszego projektu.
 Skupimy się przede wszystkim na poprawianiu defektów cyfrowych skanów zdjęć analogowych.
-Staramy się trafić do dwóch (niekoniecznie rozłącznych) grup osób --
-współczesnych fanów fotografii analogowej (będącą dla amatora niełatwą sztuką) i posiadaczy pękatych
-archiwów zdjęć rodzinnych chcących je zachować i cyfrowo utrwalić.
+Na ten moment pracowaliśmy nad usuwaniem artefaktów powstałych w procesie wywoływania zdjęć i naprawianiem kontrastu zdjęć.
+Naszym celem jest zarówno naprawienie jakości starych zdjęć rodzinnych,
+jak i tych robionych przez współczesnych amatorów fotografii analogowej.
 
 \section{Zdjęcia, zdjęcia!}
-Profilowym zdjęciem dla nas jest portret -- tak inwidualny jak i grupowy.
+Profilowym zdjęciem dla nas jest portret -- tak indywidualny jak i grupowy.
 Jest to typ zdjęć najbardziej popularny w rodzinnych albumach -- mnogość w nich zdjęć z ważnych
 dla danej familli wydarzeń: chrztów, wesel czy pogrzebów... Służą one utrwaleniu wspomnień oraz pamięci
-po krewnych i bliskich którzy już odeszli... A więc noszących dużą wartość emocjonalną dla ich posiadacza.
+po krewnych i bliskich, którzy już odeszli... A więc noszących dużą wartość emocjonalną dla ich posiadacza.
 
-Przykładem takiej osoby jest nasza koleżanka Ola -- wraz z jej rodzinnym albumem.
+Nasza koleżanka Ola odnalazła stary album rodzinny i zeskanowała znajdujące się w nim zdjęcia.
+Docelowo zajmiemy się naprawianiem skanów właśnie tych zdjęć.
+Często pojawiającymi się problemami wśród tych zdjęć są niedoświetlenie oraz zagięcia.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/STARE/Scan2025-04-14_101906.png}
+    \caption{Przykładowe zdjęcie z albumu, który można znaleźć \href{https://drive.google.com/drive/folders/1FME2DGxQ3jP6B-MKmGzHXzVHgdVP4-Fq}{tutaj!} }
+\end{figure}
+
+\newpage
 \section{Problemy}
 Wykonywanie, a następnie `ucyfrowienie' zdjęcia w technice analogowej wiąże się z różnymi trudnościami,
-które mogą znacząco obniżyć jakość zdjęcia -- a z tym satysfakcje jego posiadacza. Głównymi problemami
-którym będziemy przeciwdziałać będą niedoświetlenie zdjęcia i zanieczyszczenia powietrza osadzające
-się na oryginalnym zdjęciu i skanerze podczas procesu `ucyfrowienia' go.
+które mogą znacząco obniżyć jakość zdjęcia -- a z tym satysfakcje jego posiadacza. Głównymi problemami,
+którym będziemy przeciwdziałać, będą niedoświetlenie zdjęcia i zanieczyszczenia powietrza osadzające
+się na oryginalnym zdjęciu i skanerze podczas procesu zmiany informacji z analogowej na cyfrową.
 
-\subsection{Niedoświetlenie} % tak wiem bartek bedziesz krzyczal. ale poezja to poezja, e viva latre
+\subsection{Niedoświetlenie} % tak wiem bartek bedziesz krzyczał. ale poezja to poezja, e viva latre
 Niedoświetlenie jest problemem trudnym -- zwłaszcza dla fanów-amatorów techniki analogowej.
 Zasadnicza większość klasycznych aparatów nie posiada zaawansowanej mechaniki automatycznie wybierającej
-odpowiednie ustawienia aparatu, a brak możliwości podglądu tego, jak dane zdjęcie wyszło często doprowadza
-do sytuacji, gdzie po wielu dniach okazuje się, że na zdjęciu chwili którą fotograf chciał uchwycić i utrwalić
-niewiele widać, bo przez złe ustawienia większość szczegółów jest niewidoczna...\footnote{Jest to problem który szeroko
-    wraz z przykładami i analizą numeryczną opisywaliśmy w raporcie pierwszym.}
+odpowiednie ustawienia aparatu, a brak możliwości podglądu tego, jak dane zdjęcie wyszło, często doprowadza
+do sytuacji, gdzie po wielu dniach okazuje się, że na zdjęciu chwili, którą fotograf chciał uchwycić i utrwalić,
+niewiele widać, bo przez złe ustawienia większość szczegółów jest niewidoczna. Jest to problem, który szeroko
+wraz z przykładami i analizą numeryczną opisywaliśmy w raporcie pierwszym.
+
 Dla przykładu przypomnijmy:
 \newpage
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{Zdjęcie niedoświetlone}
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos2/doswietlone_i_nie/analog6.jpg}
+    \caption{Zdjęcie niedoświetlone.}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{I prześwietlone}
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos2/doswietlone_i_nie/analog7.jpg}
+    \caption{...i to w punkt.}
 \end{figure}
 
 
-\subsection{Zanieczyszczenia}
-Prawie że cała nasza\footnote{nie jesteśmy wszak ani naukowcami, ani lekarzami, ani ciężko chorymi. /j} codzienność
-dzieje sie w niesterylnych warunkach. I jakkolwiek dla większości z nas nie jest to problem, są miejsca i sytuacje
-gdy prowadzi to do pewnych problemów. W powietrzu nas otaczająym jest pełno unoszących się zanieczyszczeń: włosów, kurzu, futra etc.
+% REWORD THIS 
 
-Problematyczne jest natomiast osadzanie się wspomnianje powyżej materii na zdjęciach i soczewkach -- która przenosi się na
-skan tworząc nieestetyczne artefakty:
+\newpage
+\subsection{Artefakty}
+Artefakty na zdjęciach analogowych powstają ze względu na osadzanie się kurzu i innych zanieczyszczeń na wywołanej kliszy,
+a także przez jej zarysowanie.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{W skrajnych wypadkach może wyglądać to nawet tak}
-\end{figure}
+Przez to na negatywie powstają ciemne plamki, które w momencie powstawania odbitki z kolei zamieniają się w jasne plamy.
+
+Takie zjawisko można zaobserwować na poniższych zdjęciach:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{Choć bardziej częstym jest ten przypadek}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/GRAYgpt3.png}
+    \caption{W skrajnych wypadkach może wyglądać to nawet tak.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{p_1.jpg}
-    \caption{A także taki}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/new1.jpeg}
+    \caption{Choć bardziej częstym jest ten przypadek.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/new2.jpeg}
+    \caption{A także taki.}
+\end{figure}
+
+\newpage
+\section{Program i jego działanie}
+Zbrojni w wiedzę co chcemy osiągnąć i zapas zebranych skanów zdjęć do testów wzięliśmy się do pracy
+nad programem. Stworzyliśmy zaawansowany program, który inteligentnie przeszukuje cały obszar zdjęcia, zaznacza artefakty,
+a w następnej fazie działania usuwa je. Warto dodać, że algorytm przekształca zdjęcie z formatu RGB do formatu HSV (Hue, Saturation, Value) i działa tylko na Value,
+która definiuje jasność piksela w skali 0-255.
+
+Przechodząc do szczegółów, działanie programu można opisać za pomocą kilku kolejnych faz działania, na przykładzie poniższego zdjęcia:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt1.png}
+    \caption{Przykładowe zdjęcie -- to za jego pomocą opiszemy działanie programu.}
 \end{figure}
 
 
-\section{Program}
-Zbrojni w wiedzę co chcemy osiągnąć i zapas zebranych skanów zdjęć do testów wzielismy się do pracy
-nad programem.
+\subsection{Tworzenie maski}
+\subsubsection{Rozmycie gaussowskie}
+Pierwszym krokiem generowania maski jest stworzenie rozmycia gaussowskiego zdjęcia.
 
-\subsection{Yapping techniczny w subsekcjach}
-bla bla bla bla bla bla
+Wygładzanie gaussowskie jest efektem rozmywania obrazu za pomocą funkcji Gaussa,
+która jest szeroko wykorzystywana w grafice komputerowej w celu uzyskania gładkiego
+wygładzenia obrazu i wyciszenia szumu informacyjnego.
+
+Za pomocą funkcji danej wzorem dla każdego piksela:
+\begin{equation}
+    G(x, y) = \frac{1}{2 \pi \sigma^2}e^{- \frac{x^2+y^2}{2\sigma^2}}
+\end{equation}
+gdzie $x$, $y$ to współrzędne danego piksel'a, a $\sigma$ oznacza odchylenie standardowe.\footnote{Źródło: \url{https://en.wikipedia.org/wiki/Gaussian_blur}}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/gauss_blurr/gauss_blurr_gpt1.png}
+    \caption{Zdjęcie po wykonaniu rozmycia gaussowskiego.}
+\end{figure}
+
+\subsubsection{Wykonanie różnicy}
+Następnie odejmujemy od oryginału zdjęcia otrzymane w poprzednim etapie rozmycie.
+Pozwala to na wykrycie najbardziej kontrastowych elementów zdjęcia.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/difference/difference_gpt1.png}
+    \caption{Zdjęcie po wykonaniu różnicy.}
+\end{figure}
+
+\subsubsection{Usunięcie ciemnych pikseli}
+Zostawiamy tylko jasne piksele (według standardowych ustawień jest
+to jasność powyżej 60) i nadajemy im maksymalną wartość 255.
+Pozostałym pikselom ustawiamy jasność na 0.
+
+\newpage
+\subsubsection{Korekcja gamma}
+
+Korekcja gamma jest techniką stosowaną w grafice komputerowej, której celem jest dostosowanie
+jasności obrazu do ludzkiego nielinowego postrzegania światła. Korekcja gamma kompensuje ten
+nieliniowy sposób widzenia, pozwalając na efektywniejsze wykorzystanie dostępnych poziomów jasności.
+
+Korekcja gamma dokonuje transformacja jasności w następujący sposób:
+\begin{equation}
+    L'(x,y) = L(x,y)^{\gamma}
+\end{equation}
+gdzie:
+\begin{itemize}
+    \item $\gamma$ to współczynnik gamma,
+    \item $L(x,y)$ to wartości jasności pikseli.
+\end{itemize}
+
+Wiedząc to, w tym etapie bierzemy ponownie oryginalne zdjęcie, wykonujemy
+na nim korekcję gamma, a następnie na tym zdjęciu wykonujemy etapy 1-3.
+
+Działanie to pozwala uwzględnić jak najwięcej artefaktów
+-- znajdujących się także na jasnym tle.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/gamma_corection/gamma_corection_gpt1.png}
+    \caption{Po wykonaniu korekcji gamma i etapów 1-3.}
+\end{figure}
+
+\newpage
+\subsection{Gotowa maska}
+Po tym wszystkim otrzymujemy dwie podmaski (jedna robiona na oryginalnym
+zdjęciu, a druga na jaśniejszym -- rozświetloną modulacją gamma).
+Końcową maskę otrzymujemy biorąc wszystkie znalezione piksele z obu podmasek.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/masks/final_mask_gpt1.png}
+    \caption{Maska wykonana z oganianego zdjęcia}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/masks/second(gc)_mask_gpt1.png}
+    \caption{Maska wykonana z zdjęcia rozświetlonego korekcją gamma}
+\end{figure}
 
 
+\newpage
+\subsection{Działanie właściwe}
+Mając wygenerowaną maskę właściwą, przechodzimy po wyznaczonych
+przez nią pikselach na oryginalnym zdjęciu. Dla każdego piksela w
+zaznaczonego w masce wyliczamy nową wartość jasności -- średnią z
+jasności wszystkich (nie zaliczają się do tego pikseli wyznaczone
+wcześniej przez maskę.) pikseli na odległości nie więcej 15 od aktualnie analizowanego.
+
+Wynik finalny:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt1.png}
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/po/gpt1.png}
+    \caption{Przykładowe zdjęcie -- porównanie efektu przed i po.}
+
+\end{figure}
+
+\newpage
+\section{Uwagi co do działania programu}
+Przez to, że algorytm działa lokalnie (tylko w punktach wyznaczonych
+przez maskę) nie wpływa on na ogólny wygląd zdjęcia.
+Z tego też powodu możemy wykonywać program kilkukrotnie na zdjęciu
+-- uzyskując lepsze efekty.
+
+Końcowy algorytm składa się z pięciu iteracji opisanego wyżej algorytmu,
+znacząco zwiększając szansę na usunięcie zanieczyszczeń.
+
+Ponadto można uzyskać dodatkowe informacje o działaniu programu
+i jakości zdjęcia -- za przykład funkcja: .countNoise()
+zlicza ilość wyznaczonych przez maskę pikseli -- które są uznane za zanieczyszczenia.
 
 
+\section{Program do zmiany kontrastu zdjęcia}
+Napisaliśmy też osobny program zmieniający kontrast obrazu.
+Użyliśmy języka Matlab ze względu na to, że umożliwia on łatwiejsze porównanie wyników ze względu na parametr gamma.
+Algorytm korzysta z korekcji gamma opisanej wcześniej w punkcie 4.1.4.
+
+\subsection{Kod}
+\begin{verbatim}
+g = imread("test_2.png");
+figure(1);
+tiledlayout(3,3)
+nexttile
+imshow(g);
+title("zdjęcie niezmienione")
+gamma = 0.25;
+for k=1:9
+    if gamma ~= 1
+        gout = double(g)/255;
+        gout = gout.^gamma;
+        gout = gout*255;
+        gout = uint8(gout);
+        nexttile
+        imshow(gout);
+        title(['gamma = ' num2str(gamma)]);
+    end
+    gamma = gamma + 0.25;
+end
+\end{verbatim}
+
+\newpage
+\subsection{Działanie programu ze względu na parametr gamma}
+%tutaj zdjęcie co wysłałam na discordzie
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{Photos2/porownanie.png}
+    \caption{Działanie programu dla różnych parametrów $\gamma$}
+\end{figure}
 
 
-\section{Dostępność programu}
-Nasz program jest programem terminalowym działającym na systemie nie starszym niż Windows 10.
+\section{Dalsze kroki}
+Na chwilę obecną nasze rozwiązanie jest programem terminalowym,
+działającym na systemie nie starszym niż Windows 10 -- choć istnieje
+plan przeniesienia go także na inne popularne systemy operacyjne.
 
-Program dostępny jest dostępny na licencji \textit{bla bla} i można go znaleźć na GitHubie
-pod adresem \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+Tak samo pracujemy obecnie nad stworzeniem bardziej przystępnego interfejsu okienkowego, a przy tym
+planujemy integrację poszczególnych elementów programu. Zamierzamy również między innymi dodać funkcjonalność usuwającą widoczne zagięcia.
+
+Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
+pod adresem:
+\begin{center}
+    \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+\end{center}
 
 
 
@@ -170,14 +357,15 @@ pod adresem \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
 \section{Wykorzystywane narzędzia}
 W tej części naszego projektu korzystaliśmy z następujących narzędzi:
 \begin{itemize}
-    \item Programu i języka Matlab -- do analizy zdjęć;
-    \item Języka c++ -- do napisania programu;
-    \item Skanera minilab Noritsu HS-1800 -- do wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
+    \item Programu i języka Matlab -- do analizy zdjęć i kontrastu;
+    \item Języka C++ -- do napisania programu usuwającego artefakty;
+    \item Programu VS Code -- do tworzenia, edycji i dokumentacji kodu programu i raportów;
     \item Programu LibreOffice Calc -- do analizy części danych numerycznych;
     \item $\LaTeXe{}$ -- do przygotowania raportu;
-    \item Google Drive -- do udostępniania plików;
-    \item Github -- do udostępniania i pracy nad kodem;
+    \item Strony Github i programu Git -- do udostępniania, dystrybucji i pracy nad kodem;
     \item 7zip -- do kompresji zdjęć;
+    \item Google Drive -- do udostępniania plików;
+    \item Skanera minilab Noritsu HS-1800 -- do wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
     \item Aparatów:
           \begin{itemize}
               \item Canon EOS 300 z obiektywem Tamron 28-105mm 1:4-5.6 i kliszą Fomapan 400
@@ -189,15 +377,37 @@ W tej części naszego projektu korzystaliśmy z następujących narzędzi:
 \section{Podział obowiązków}
 Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
 \begin{itemize}
-    \item Bartosz Wójcik -- wykonywanie, skanowanie i analiza zdjęć; opieka merytoryczna.
-    \item Katarzyna Szwed -- tworzenie, analizowanie i pisanie algorytmu; korekta raportu.
+    \item Bartosz Wójcik -- wykonywanie, skanowanie i analiza zdjęć; research.
+    \item Katarzyna Szwed -- korekta raportu; tworzenie, analizowanie i pisanie algorytmu.
     \item Natalia Szymańska -- pisanie raportu.
-    \item Patrycja Szałajko -- zarządzanie pracą zespołu, kontakt z mediami.
+    \item Patrycja Szałajko -- zarządzanie pracą zespołu, kontakt.
     \item Aleksandra Wójcik -- skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu.
     \item Karol Sęk -- tworzenie, analizowanie i pisanie algorytmu.
     \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
     \item Filip Sajko -- pisanie raportu, implementacja w \LaTeX{}.
 \end{itemize}
+
+
+%                       Wersja alternatywna podziału obowiązków
+% \section{Podział obowiązków}
+% Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
+% 
+% \begin{table}[h!]
+%     \centering
+%     \renewcommand{\arraystretch}{1.3}
+%     \begin{tabular}{|p{3cm}|p{7.5cm}|} \hline
+%         \textbf{Imię i nazwisko} & \textbf{Zakres obowiązków}                                                               \\ \hline \hline
+%         Bartosz Wójcik           & Wykonywanie, skanowanie i analiza zdjęć; opieka merytoryczna.                            \\ \hline
+%         Katarzyna Szwed          & Tworzenie, analizowanie i pisanie algorytmu; korekta raportu.                            \\ \hline
+%         Natalia Szymańska        & Pisanie raportu.                                                                         \\ \hline
+%         Patrycja Szałajko        & Zarządzanie pracą zespołu, kontakt z mediami.                                            \\ \hline
+%         Aleksandra Wójcik        & Skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu. \\ \hline
+%         Karol Sęk                & Tworzenie, analizowanie i pisanie algorytmu.                                             \\ \hline
+%         Michał Juszkiewicz       & Tworzenie, analizowanie i pisanie algorytmu.                                             \\ \hline
+%         Filip Sajko              & Pisanie raportu, implementacja w \LaTeX{}.                                               \\ \hline
+%     \end{tabular}
+%     \caption{Podział obowiązków w zespole projektowym.}
+% \end{table}
 
 
 
