@@ -4,7 +4,7 @@ LINKER = link
 INCLUDE_PATH = C:/Windows/opencv/build/include
 LIB_PATH = .
 
-CXXFLAGS = /c /I $(INCLUDE_PATH) /Zi /EHsc
+CXXFLAGS = /c /I $(INCLUDE_PATH) /Zi /EHsc /std:c++17
 LDFLAGS = /LIBPATH:$(LIB_PATH) opencv_world4110.lib
 
 SOURCES = main.cpp photo.cpp
