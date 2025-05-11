@@ -5,9 +5,46 @@
 #include <filesystem>
 #include "photo.hpp"
 #include "hnorm.hpp"
+#include "filter.hpp"
 
-
+using namespace std;
 using namespace std::filesystem;
+
+void other(path input,path output,char read){
+
+    Photo image(input.string());    
+    Mat fixed;
+    bool skip = false;
+    
+    switch (read) {
+        case '2':
+            fixed = getHnorm(image);
+            break;
+        case '3':
+            fixed = getBilateralFilter(image);
+            break;
+        case '4':
+            fixed = getGaussianFilter(image);
+            break;
+        case '5':
+            fixed = deNoise(image);
+            break;
+        case '6':
+            fixed = getUnsharpMask(image);
+            break;
+        default:
+            skip = true;
+            break;
+    }
+    if(!skip)
+        imwrite(output.string(), fixed);    
+    
+
+    waitKey(0);
+    return;
+
+}
+
 
 
 int main(int argc, char* argv[]) {
@@ -19,6 +56,22 @@ int main(int argc, char* argv[]) {
     path inputPath = argv[1];
     path outputPath = argv[2];
     string pti = "/PTI_";
+    char read;
+
+
+    cout << "Wybierz operacje:\n"
+    "1 - usuwanie farfocli\n"
+    "2 - normalizacja histogramu jasnosci\n"
+    "3 - filtracja filtrem bilateralnym\n"
+    "4 - filtracja filtrem gaussowskim\n"
+    "5 - usuwanie szumu usrednianiem pikseli\n"
+    "6 - wyostrzanie maska wyostrzajaca\n";
+    cin >> read;
+
+    if(read != '1'){
+        other(inputPath,outputPath, read);
+        return 0;
+    }
 
     if (!exists(inputPath)) {
         cerr << "Error: no such file or directory.\n";
