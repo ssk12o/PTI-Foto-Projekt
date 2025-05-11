@@ -1,0 +1,230 @@
+\documentclass[]{mwart}
+
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage[draft%      % dla obrazkow zakomentowac draft
+]{graphicx}  
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{verbatim}
+
+
+
+\usepackage{caption}    
+\usepackage{float}      
+
+
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\includegraphics[height=0.666cm]{wspolne_dla_wszystkich/logo_projektu.png}}
+\fancyhead[C]{\textit{Poprawa jakości zdjęć}}
+\fancyhead[R]{\includegraphics[height=0.9cm]{wspolne_dla_wszystkich/logo_uczelni.png}}
+\fancyfoot[C]{\thepage}
+
+\setlength{\headheight}{20pt}  
+
+
+
+\usepackage{listings}
+\usepackage{xcolor} 
+
+
+
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_uczelni.png}
+\end{figure}
+
+
+\begin{center}
+    {\LARGE \textbf{Poprawa jakości skanów zdjęć wykonanych techniką analogową
+        }} \\[0.3cm]
+    {\large \textbf{Raport II}} \\[0.2cm]
+    \textit{projekt realizowany pod opieką prof. dr hab. inż. Artura Przelaskowskiego}
+
+\end{center}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_projektu.png}
+\end{figure}
+
+\vfill
+\begin{abstract}
+    Raport 3 projektu poprawy jakości cyfrowych skanów zdjęć wykonanych techniką analogową przez grupę nr 9 (wtorkową z godziny 18)
+    w składzie:  Bartosz Wójcik, Katarzyna Szwed, Natalia Szymańska,
+    Patrycja Szałajko, Aleksandra Wójcik, Karol Sęk, Michał Juszkiewicz, Filip Sajko.
+
+    W tym raporcie opiszemy nasze działania prowadzące do poprawy działania programu i opiszemy poprawki.
+    Zajmiemy się ponadto ekstensywnym testowaniem działania naszego programu i wyciagnieciem wniosków na temat jego działania i optymalnych ustawień.
+\end{abstract}
+
+\newpage
+\tableofcontents{}
+
+\newpage
+
+% ADD KOREKTA
+\section{Korekta do raportu 2}
+\begin{itemize}
+    \item //to do
+\end{itemize}
+
+
+\section{Rozszerzanie działalności programu}
+\subsection{Słowem wstępu...}
+Głównym celem naszego programu jest coś, co można nazwać
+ogólnie\footnote{konkretnie nasz cel zdefiniowaliśmy w poprzednim raporcie.}
+poprawą jakość skanów zdjęć analogowych. Trzeba jednak pamiętać,
+że najważniejszym ogniwem każdego problemy jest człowiek, którego
+problem ten dotyczy -- i któremu chce się pomóc oferując dane rozwiązania. \newline
+
+Tak więc łatwo zauważyć, że kluczowym elementem każdego programu jest dobrze wykonany
+interfejs użytkownika. W ostatecznym rozrachunku przecież gorszy
+jest przecież program z nawet najlepszym algorytmem skrytym pod płaszczem źle zaprojektowanego,
+nieczytelnego i nieprzyjaznego interfejsu od którego użytkownik się odbije
+i koniec końców z usług którego nie skorzysta. \newline
+
+Rozumiejąc tę potrzebę wraz z optymalizacją i rozszerzaniem funkcjonalności
+naszego programu stworzyliśmy interfejs użytkownika i zaczęliśmy % tja... na pewno
+tworzyć szczegółową instrukcję obsługi naszego programu.
+
+\subsection{Menu programu}
+Na chwilę obecną główne menu naszego programu oferuje następujące opcje:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|l|}
+        \hline
+        Lp. & Opcja                                  \\ \hline
+        1   & usuwanie farfocli                      \\ \hline
+        2   & normalizacja histogramu jasności       \\ \hline
+        3   & filtracja filtrem bilateralnym         \\ \hline
+        4   & filtracja filtrem gassowskim           \\ \hline
+        5   & usuwaniem szumu -- uśrednianie pikseli \\ \hline
+        6   & wyostrzenie -- maska wyostrzająca      \\ \hline
+    \end{tabular}
+    \caption{Opcje główne naszego programu dostane dla użytkownika}
+\end{table}
+
+Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyżej tabeli opcji. \newpage
+
+
+
+
+
+
+\section{Usuwanie farfocli                      }
+\section{Normalizacja histogramu jasności       }
+\section{Filtracja filtrem bilateralnym         }
+\section{Filtracja filtrem gassowskim           }
+\section{Usuwaniem szumu -- uśrednianie pikseli }
+\section{Wyostrzenie -- maska wyostrzająca      }
+
+
+
+\section{Eksperymenty -- studiom ciekawych przypadków}
+Tu będą wyniki naszych eksperymentów z ciekawych ustawień dla różnych zdjęć.
+
+
+
+
+
+
+
+\newpage
+
+\section{Dalsze kroki}
+Pracujemy obecnie nad stworzeniem bardziej przystępnego interfejsu okienkowego, a przy tym
+planujemy lepszą integrację poszczególnych elementów programu.
+W dalszym ciągu poszukujemy metod optymalizacji jego działania.
+
+\section{Dostępność programu}
+Na chwilę obecną nasze rozwiązanie jest zaawansowanym programem terminalowym,
+działającym na każdym systemie z dostępną i zainstalowaną biblioteką OpenCV oraz
+dowolnym kompilatorem języka C++ zdolnym do kompilacji na systemie tym lub pochodnym.
+
+Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
+pod adresem:
+\begin{center}
+    \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+\end{center}
+skąd można go łatwo pobrać, skompilować i wykorzystywać dowolnie (choć zgodnie z przeznaczeniem!).
+
+
+
+
+\newpage
+\section{Wykorzystywane narzędzia}
+W tej części naszego projektu korzystaliśmy z następujących narzędzi:
+\begin{itemize}
+    \item Programu i języka Matlab -- do analizy zdjęć;
+    \item Języka C++ -- do napisania programu usuwającego artefakty;
+    \item Programu VS Code -- do tworzenia, edycji i dokumentacji kodu programu i raportów;
+    \item Programu LibreOffice Calc -- do analizy części danych numerycznych;
+    \item $\LaTeXe{}$ -- do przygotowania raportu;
+    \item Strony Github i programu Git -- do udostępniania, dystrybucji i pracy nad kodem;
+    \item 7zip -- do kompresji zdjęć;
+    \item Google Drive -- do udostępniania części dużych plików;
+    \item Skanera minilab Noritsu HS-1800 -- do w dalszej części wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
+    \item Aparatów:
+          \begin{itemize}
+              \item Canon EOS 300 z obiektywem Tamron 28-105mm 1:4-5.6 i kliszą Fomapan 400
+              \item Fujifilm FinePix L55 Digital Camera -- Black (12MP, 3x Optical Zoom)
+          \end{itemize}
+\end{itemize}
+
+
+\section{Podział obowiązków}
+Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
+\begin{itemize}
+    \item Bartosz Wójcik -- wykonywanie, skanowanie i analiza zdjęć; research.
+    \item Katarzyna Szwed -- korekta raportu; analiza zdjęć i działania programu.
+    \item Natalia Szymańska -- pisanie raportu.
+    \item Patrycja Szałajko -- zarządzanie pracą zespołu, kontakt.
+    \item Aleksandra Wójcik -- skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu.
+    \item Karol Sęk -- tworzenie, analizowanie i pisanie algorytmu.
+    \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
+    \item Filip Sajko -- pisanie raportu, implementacja w \LaTeX{}.
+\end{itemize}
+
+
+%                       Wersja alternatywna podziału obowiązków
+% \section{Podział obowiązków}
+% Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
+% 
+% \begin{table}[h!]
+%     \centering
+%     \renewcommand{\arraystretch}{1.3}
+%     \begin{tabular}{|p{3cm}|p{7.5cm}|} \hline
+%         \textbf{Imię i nazwisko} & \textbf{Zakres obowiązków}                                                               \\ \hline \hline
+%         Bartosz Wójcik           & Wykonywanie, skanowanie i analiza zdjęć; opieka merytoryczna.                            \\ \hline
+%         Katarzyna Szwed          & Tworzenie, analizowanie i pisanie algorytmu; korekta raportu.                            \\ \hline
+%         Natalia Szymańska        & Pisanie raportu.                                                                         \\ \hline
+%         Patrycja Szałajko        & Zarządzanie pracą zespołu, kontakt z mediami.                                            \\ \hline
+%         Aleksandra Wójcik        & Skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu. \\ \hline
+%         Karol Sęk                & Tworzenie, analizowanie i pisanie algorytmu.                                             \\ \hline
+%         Michał Juszkiewicz       & Tworzenie, analizowanie i pisanie algorytmu.                                             \\ \hline
+%         Filip Sajko              & Pisanie raportu, implementacja w \LaTeX{}.                                               \\ \hline
+%     \end{tabular}
+%     \caption{Podział obowiązków w zespole projektowym.}
+% \end{table}
+
+
+
+
+\end{document}
