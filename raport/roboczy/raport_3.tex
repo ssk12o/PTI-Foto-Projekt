@@ -82,7 +82,6 @@
 \section{Korekta do raportu 2}
 \begin{itemize}
     \item Dla zdjęcia naszej koleżanki Leny z poprzedniego raportu szerokość filtru gaussowskiego $ =  37/71$.
-    \item //to do
 \end{itemize}
 
 
@@ -90,18 +89,20 @@
 \subsection{Słowem wstępu...}
 Głównym celem naszego programu jest coś, co można nazwać
 ogólnie\footnote{konkretnie nasz cel zdefiniowaliśmy w poprzednim raporcie.}
-poprawą jakość skanów zdjęć analogowych. Trzeba jednak pamiętać,
-że najważniejszym ogniwem każdego problemy jest człowiek, którego
+poprawą jakości skanów zdjęć analogowych. Trzeba jednak pamiętać,
+że najważniejszym ogniwem każdego problemu jest człowiek, którego
 problem ten dotyczy -- i któremu chce się pomóc oferując dane rozwiązania. \newline
 
 Tak więc łatwo zauważyć, że kluczowym elementem każdego programu jest dobrze wykonany
 interfejs użytkownika. W ostatecznym rozrachunku przecież gorszy
-jest przecież program z nawet najlepszym algorytmem skrytym pod płaszczem źle zaprojektowanego,
-nieczytelnego i nieprzyjaznego interfejsu od którego użytkownik się odbije
-i koniec końców z usług którego nie skorzysta. \newline
+jest przecież program z najlepszym algorytmem, ale złym interfejsem, z którego użytkownik i tak nie skorzysta. \newline
+
+% program z nawet najlepszym algorytmem skrytym pod płaszczem źle zaprojektowanego,
+% nieczytelnego i nieprzyjaznego interfejsu od którego użytkownik się odbije
+% i koniec końców z usług którego nie skorzysta. \newline
 
 Rozumiejąc tę potrzebę wraz z optymalizacją i rozszerzaniem funkcjonalności
-naszego programu stworzyliśmy interfejs użytkownika i zaczęliśmy % tja... na pewno
+naszego programu, stworzyliśmy interfejs użytkownika i zaczęliśmy % tja... na pewno
 tworzyć szczegółową instrukcję obsługi naszego programu.
 
 \subsection{Menu programu}
@@ -119,7 +120,7 @@ Na chwilę obecną główne menu naszego programu oferuje następujące opcje:
         5   & usuwaniem szumu -- uśrednianie pikseli \\ \hline      %
         6   & wyostrzenie -- maska wyostrzająca      \\ \hline      %
     \end{tabular}
-    \caption{Opcje główne naszego programu dostane dla użytkownika}
+    \caption{Opcje główne naszego programu dostępne dla użytkownika}
 \end{table}
 
 Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyżej tabeli opcji. \newpage
@@ -140,9 +141,7 @@ zdjęć nimi zanieczyszczonych opisaliśmy w poprzednim raporcie.
 W tej części chcielibyśmy zająć się głównie opisaniem efektów naszej pracy.
 
 \subsection{Efekty ogólne i ciekawe przypadki}
-W prawie wszystkich testowanych przez nas przypadkach działanie programu w sposób widoczny poprawiało jakość zdjęcia i poprawiało jego estetykę.
-
-% insert przypadki typowe
+W prawie wszystkich testowanych przez nas przypadkach działanie programu w sposób widoczny poprawiało jakość i estetykę zdjęcia.
 
 Co ciekawe, podczas naszych testów odkryliśmy, że ta nasza funkcjonalność
 wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się na zdjęciach:
@@ -172,12 +171,12 @@ wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/dziewczyna_before.jpg}
-    \caption{Zdjęcie naszej koleżanki Zosi z zaciekami.}
+    \caption{Zdjęcie z zaciekami.}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/dziewczyna_after.jpg}
-    \caption{Poprawione zdjęcie naszej koleżanki Zosi, szerokość filtru gaussowskiego $3/71$.}
+    \caption{Poprawione zdjęcie, szerokość filtru gaussowskiego $3/71$.}
 \end{figure}
 
 \begin{figure}[H]
@@ -223,12 +222,12 @@ przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać n
 
 \section{Filtracja filtrem bilateralnym         }
 \subsection{Metoda}
-Filtr bilateralny jest nieliniowym filtrem wygładzającym, przede charakteryzuje się tym,
+Filtr bilateralny jest nieliniowym filtrem wygładzającym, przede wszystkim charakteryzuje się tym,
 że zachowuje krawędzie i redukuje szum.
 
 Zastępuje on intensywność każdego
 piksela średnią ważoną intensywności pobliskich pikseli.
-Wagi tej średniej oparte są nas rozkładzie Gaussa i jej wagi zależą nie tylko od odległości
+Wagi tej średniej oparte są na rozkładzie Gaussa i jej wagi zależą nie tylko od odległości
 między pikselami, ale także od różnic w intensywności koloru.
 
 Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu.
@@ -259,7 +258,7 @@ która jest szeroko wykorzystywana w grafice komputerowej w celu uzyskania wygł
 
 Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do poprawy wizualnego odbioru zdjęcia.
 
-\subsection{Przykłady użycia}
+\subsection{Przykłady}
 % \begin{figure}[H]
 %     \centering
 %     \includegraphics[width=\linewidth, keepaspectratio]{}
@@ -278,6 +277,15 @@ Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do pop
 
 \section{Usuwaniem szumu -- uśrednianie pikseli }
 \subsection{Metoda}
+Ta metoda polega na uśrednianiu pikseli w oparciu o ich otoczenie.
+
+Dane piksele uznaje się za podobne, jeśli średnia jasność ich otoczenia
+jest zbliżona. Następnie, wartość danego piksela jest zastępowana
+średnią wartością wszystkich pikseli podobnych do niego w danym obszarze.
+
+Dzięki temu szum zostaje zredukowany a krawędzie i granice różnych obrazów,
+są lepiej zachowane niż przy zwykłym rozmyciu.
+
 
 \subsection{Przykłady}
 
@@ -287,7 +295,7 @@ Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do pop
 \section{Wyostrzenie -- maska wyostrzająca      }
 
 \subsection{Metoda}
-Maskowanie nieostrości za pomoca jest techniką wyostrzania obrazu
+Maskowanie nieostrości za pomocą maski nieostrości jest techniką wyostrzania obrazu
 powszechnie wykorzystywaną w obróbce fotografii w celu poprawy ostrości zdjęć.
 
 Nazwa pochodzi od faktu, że technika ta wykorzystuje rozmyty,
@@ -316,7 +324,7 @@ W dalszym ciągu poszukujemy metod optymalizacji jego działania.
 \section{Dostępność programu}
 Na chwilę obecną nasze rozwiązanie jest zaawansowanym programem terminalowym,
 działającym na każdym systemie z dostępną i zainstalowaną biblioteką OpenCV oraz
-dowolnym kompilatorem języka C++ zdolnym do kompilacji na systemie tym lub pochodnym.
+dowolnym kompilatorem języka C++ zdolnym do kompilacji na tym systemie lub jego pochodnym.
 
 Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
 pod adresem:
@@ -361,6 +369,13 @@ Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w nast
     \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
     \item Filip Sajko -- pisanie raportu, implementacja w \LaTeXe{}.
 \end{itemize}
+
+
+
+
+
+
+
 
 
 %                       Wersja alternatywna podziału obowiązków
