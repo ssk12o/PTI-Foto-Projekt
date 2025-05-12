@@ -70,7 +70,7 @@
     Patrycja Szałajko, Aleksandra Wójcik, Karol Sęk, Michał Juszkiewicz, Filip Sajko.
 
     W tym raporcie opiszemy nasze działania prowadzące do poprawy działania programu i opiszemy poprawki.
-    Zajmiemy się ponadto ekstensywnym testowaniem działania naszego programu i wyciagnieciem wniosków na temat jego działania i optymalnych ustawień.
+    Zajmiemy się ponadto ekstensywnym testowaniem działania naszego programu i wyciągnięciem wniosków na temat jego działania i optymalnych ustawień.
 \end{abstract}
 
 \newpage
@@ -112,13 +112,13 @@ Na chwilę obecną główne menu naszego programu oferuje następujące opcje:
     \centering
     \begin{tabular}{|c|l|}
         \hline
-        Lp. & Opcja                                  \\ \hline
-        1   & usuwanie farfocli                      \\ \hline      % done
-        2   & normalizacja histogramu jasności       \\ \hline      % done
-        3   & filtracja filtrem bilateralnym         \\ \hline      %       metoda
-        4   & filtracja filtrem gassowskim           \\ \hline      %       metoda
-        5   & usuwaniem szumu -- uśrednianie pikseli \\ \hline      %
-        6   & wyostrzenie -- maska wyostrzająca      \\ \hline      %
+        Lp. & Opcja                                 \\ \hline
+        1   & usuwanie farfocli                     \\ \hline       %
+        2   & normalizacja histogramu jasności      \\ \hline       %
+        3   & filtracja filtrem bilateralnym        \\ \hline       %
+        4   & filtracja filtrem gaussowskim         \\ \hline       %
+        5   & usuwanie szumu -- uśrednianie pikseli \\ \hline       %
+        6   & wyostrzenie -- maska wyostrzająca     \\ \hline       %
     \end{tabular}
     \caption{Opcje główne naszego programu dostępne dla użytkownika}
 \end{table}
@@ -133,7 +133,7 @@ Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyżej tabeli op
 \section{Usuwanie farfocli}
 
 \subsection{Słowem wstępu}
-Jest to główny pierwotny cel naszego projektu i problem z którym się mierzyliśmy podczas poprzedniego etapu.
+Jest to główny cel naszego projektu i problem z którym się mierzyliśmy podczas poprzedniego etapu.
 
 Szczegółowo sposób wykrywania, usuwania tego typu artefaktów i normalizowania
 zdjęć nimi zanieczyszczonych opisaliśmy w poprzednim raporcie.
@@ -145,6 +145,8 @@ W prawie wszystkich testowanych przez nas przypadkach działanie programu w spos
 
 Co ciekawe, podczas naszych testów odkryliśmy, że ta nasza funkcjonalność
 wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się na zdjęciach:
+
+\newpage
 
 \begin{figure}[H]
     \centering
@@ -182,7 +184,7 @@ wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/farfocle4_before.jpg}
-    \caption{Zdjęcie zarysowane.}
+    \caption{Zdjęcie z zaciekami.}
 \end{figure}
 \begin{figure}[H]
     \centering
@@ -193,19 +195,21 @@ wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się
 
 
 
-
+\newpage
 
 \section{Normalizacja histogramu jasności       }
 \subsection{Metoda}
 Wyrównanie histogramu jasności jest metodą przetwarzania obrazów, polegającą na
 poprawianiu kontrastu zdjęcia z wykorzystaniem jego histogramu -- który się normalizuje.
 Metoda ta rozciąga wartości pikseli z obrazu na cały przedział jasności.
-Dzięki temu, fragmenty zdjęcia o pierwotnie niskim poziomie kontrastu stają się -- czytelniejsze.
+Dzięki temu, fragmenty zdjęcia o pierwotnie niskim poziomie kontrastu stają się czytelniejsze.
+
 
 \subsection{Przykłady}
-Metoda ta jest bardzo skuteczna w poprawianiu kontrastu zdjęcia -- choć niestety potrafi dziać się
-to kosztem jakości zdjęcia. Metoda ta nie rozróżnia sygnału od szumu co może spowodować wzrost wartości szumu,
+Metoda ta jest bardzo skuteczna w poprawianiu kontrastu zdjęcia -- niestety czasem
+kosztem jakości zdjęcia. Metoda ta nie rozróżnia sygnału od szumu co może spowodować wzrost wartości szumu,
 przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać na poniższym zdjęciu.
+
 
 \begin{figure}[H]
     \centering
@@ -218,6 +222,8 @@ przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać n
     \caption{Zdjęcie po normalizacji (zaszumione) wraz z histogramem.}
 \end{figure}
 
+\newpage
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/2 normalizacja histogramu jasności/hist/motor_intensity.jpg}
@@ -226,7 +232,7 @@ przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać n
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/2 normalizacja histogramu jasności/hist/motor_after_intensity.jpg}
-    \caption{Zdjęcie po normalizacji (zaszumione) wraz z histogramem.}
+    \caption{Zdjęcie po normalizacji wraz z histogramem.}
 \end{figure}
 
 % \begin{figure}[H]
@@ -242,7 +248,7 @@ przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać n
 
 
 
-
+\vfill
 \section{Filtracja filtrem bilateralnym         }
 \subsection{Metoda}
 Filtr bilateralny jest nieliniowym filtrem wygładzającym, przede wszystkim charakteryzuje się tym,
@@ -250,9 +256,10 @@ Filtr bilateralny jest nieliniowym filtrem wygładzającym, przede wszystkim cha
 
 Zastępuje on intensywność każdego piksela średnią ważoną intensywności pobliskich pikseli
 wyliczoną poprzez filtr o odpowiednim rozmiarze.
-Jeżeli wartość danego piksela jest bliska wartości piksela w centrum filtru, jego waga jest --
-oparta na rozkładzie Gaussa. W przeciwnym wypadku waga jest bliska 0. 
-Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu.
+Jeżeli wartość danego piksela jest bliska wartości piksela w centrum filtru, jego waga jest 
+oparta na rozkładzie Gaussa. W przeciwnym wypadku waga jest bliska 0.
+Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu. \newpage
+
 
 \subsection{Przykłady}
 
@@ -260,7 +267,7 @@ Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym t
     \centering
     \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos3/filtr bilateralny/test3.jpg}
     \caption{Zdjęcie pierwotne.}
-\end{figure}
+\end{figure} \newpage
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/filtr bilateralny/test3b.jpg}
@@ -272,9 +279,9 @@ Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym t
 
 
 
-\section{Filtracja filtrem gassowskim           }
+\section{Filtracja filtrem gaussowskim           }
 \subsection{O rozmyciu gaussowskim}
-Filtracja filtrem gausowskim oparta jest na generowaniu maski poprzez tworzenie rozmycia gaussowskiego zdjęcia.
+Filtracja filtrem gaussowskim oparta jest na generowaniu maski poprzez tworzenie rozmycia gaussowskiego zdjęcia.
 
 Wygładzanie gaussowskie jest efektem rozmywania obrazu za pomocą funkcji rozkładu Gaussa,
 która jest szeroko wykorzystywana w grafice komputerowej w celu uzyskania wygładzenia obrazu i wyciszenia szumu informacyjnego.
@@ -282,24 +289,24 @@ która jest szeroko wykorzystywana w grafice komputerowej w celu uzyskania wygł
 Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do poprawy wizualnego odbioru zdjęcia.
 
 \subsection{Przykłady}
-probably złe zdjęcia -- praca domowa dla Karola.
+% probably złe zdjęcia -- praca domowa dla Karola.
 
 \begin{figure}[H]
     \centering
     \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos3/filtr gaussowski/test3.jpg}
-    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
-\end{figure}
+    \caption{Zdjęcie przed.}
+\end{figure} \newpage
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/filtr gaussowski/test3g.jpg}
-    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+    \caption{Zdjęcie po.}
 \end{figure}
 
 
 
 
 
-
+\vfill
 \section{Usuwaniem szumu -- uśrednianie pikseli}
 \subsection{Metoda}
 Ta metoda polega na uśrednianiu wartości pikseli w oparciu o piksele do nich podobne.
@@ -308,53 +315,55 @@ Dane piksele uznaje się za podobne, jeśli średnia jasność ich otoczenia
 jest zbliżona. Następnie, wartość danego piksela jest zastępowana
 średnią wartością wszystkich pikseli podobnych do niego.
 
+
 W przeciwieństwie do innych metod usuwania szumu, metoda ta nie jest lokalna,
 dla każdego piksela piksele podobne mogą się znajdować gdziekolwiek na zdjęciu.
 
-Algorytm ten usuwa szum nie niszcząc struktury i detali zdjęcia, jednakże 
-czasami okazuje się mieć nieznaczne efekty
+Algorytm ten usuwa szum nie niszcząc struktury i detali zdjęcia, jednakże
+czasami okazuje się mieć nieznaczne efekty. \newpage
+
 
 \subsection{Przykłady}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/srodmiescie_before_szum.jpg}
-    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+    \caption{Zdjęcie przed usuwaniem szumu.}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/srodmiescie_after_szum.jpg}
-    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
-\end{figure}
+    \caption{Zdjęcie po usuwaniu szumu.}
+\end{figure} \newpage
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/motor_before_szum.jpg}
-    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+    \caption{Zdjęcie przed usuwaniem szumu.}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/motor_after_szum.jpg}
-    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+    \caption{Zdjęcie po usuwaniu szumu.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/pogrzeb_ostrosc.png}
-    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+    \caption{Zdjęcie przed usuwaniem szumu.}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/pogrzeb_odszum.png}
-    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+    \caption{Zdjęcie po usuwaniu szumu.}
 \end{figure}
 
 
 
-
+\newpage
 \section{Wyostrzenie -- maska wyostrzająca      }
 
 \subsection{Metoda}
-Maskowanie nieostrości za pomocą maski nieostrości jest techniką wyostrzania obrazu
+Wyostrzanie za pomocą maski nieostrości jest techniką wyostrzania obrazu
 powszechnie wykorzystywaną w obróbce fotografii w celu poprawy ostrości zdjęć.
 
 Nazwa pochodzi od faktu, że technika ta wykorzystuje rozmyty,
@@ -377,12 +386,12 @@ może okazać się mniej wiernym odwzorowaniem oryginalnego obrazu.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dziadek.png}
+    \includegraphics[angle=-90, width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dziadek.png}
     \caption{Zdjęcie przed wyostrzeniem maską wyostrzającą.}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dziadek_ostrosc.png}
+    \includegraphics[angle=-90, width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dziadek_ostrosc.png}
     \caption{Zdjęcie po wyostrzeniu maską wyostrzającą.}
 \end{figure}
 
@@ -393,22 +402,22 @@ może okazać się mniej wiernym odwzorowaniem oryginalnego obrazu.
 
 
 
-
+\newpage
 \section{Przykładowe wykorzystanie programu jako całości}
-Nasz program daje wiele możliwości edycji zdjęć.
+Dzięki naszym badaniom wypracowaliśmy narzędzie o szerokim zastosowaniu w życiu codziennym.
+Aby zmaksymalizować jego skuteczność, przeprowadziliśmy dodatkowe badania,
+mające na celu ustalenie najefektywniejszej metody użycia. Odkryliśmy, że najlepsze efekty osiągamy,
+stosując kolejno narzędzia do usuwania farfocli, poprawiania ostrości oraz odszumiania.
 
-Na podstawie naszych badań odkryliśmy,
-że kombinacją dającą w dużej części zdjęć bardzo dobre efekty
-było zastosowanie kolejno:
-usuwanie farfocli, poprawa ostrości i finalnie odszumianie.
+Dzieje się tak dlatego, że najpierw eliminujemy obce elementy,
+powstałe jako zanieczyszczenia fizyczne podczas skanowania.
+Kolejny etap -- poprawianie ostrości -- zwiększa jednak poziom szumu,
+dlatego końcowe odszumianie cofa niepożądane skutki uboczne poprzedniego kroku.
 
-Po pewnym zastanowieniu nie jest to zbytnio zaskakujące, najpierw pozbywamy
-się elementów obcych ze zdjęcia, powstałych jako zanieczyszczenia fizyczne
-na samym zdjęciu. Następująca poprawa ostrości poprawia jakość, jednak kosztem
-zwiększania szumu -- efekt który niwelowany jest przed odszumianie.
-
-Oczywiście wybranie każde zdjęcie wymaga odpowiedniej obróbki dostosowanej
-do problemu
+Trzeba jednak podkreślić, że nasze narzędzie nie jest na tym etapie w pełni zautomatyzowane
+-- każde zdjęcie wymaga indywidualnej obróbki, dostosowanej do specyfiki problemu.
+Widać to, analizując fotografie użyte w badaniach: w zależności od potrzeb stosowaliśmy różne maski,
+które dopasowywaliśmy do konkretnej sytuacji.
 
 
 
