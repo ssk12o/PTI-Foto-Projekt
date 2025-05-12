@@ -204,6 +204,7 @@ poprawianiu kontrastu zdjęcia z wykorzystaniem jego histogramu -- który się n
 Metoda ta rozciąga wartości pikseli z obrazu na cały przedział jasności.
 Dzięki temu, fragmenty zdjęcia o pierwotnie niskim poziomie kontrastu stają się czytelniejsze.
 
+
 \subsection{Przykłady}
 Metoda ta jest bardzo skuteczna w poprawianiu kontrastu zdjęcia -- niestety czasem
 kosztem jakości zdjęcia. Metoda ta nie rozróżnia sygnału od szumu co może spowodować wzrost wartości szumu,
@@ -255,9 +256,10 @@ Filtr bilateralny jest nieliniowym filtrem wygładzającym, przede wszystkim cha
 
 Zastępuje on intensywność każdego piksela średnią ważoną intensywności pobliskich pikseli
 wyliczoną poprzez filtr o odpowiednim rozmiarze.
-Jeżeli wartość danego piksela jest bliska wartości piksela w centrum filtru, jego waga jest --
+Jeżeli wartość danego piksela jest bliska wartości piksela w centrum filtru, jego waga jest 
 oparta na rozkładzie Gaussa. W przeciwnym wypadku waga jest bliska 0.
 Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu. \newpage
+
 
 \subsection{Przykłady}
 
@@ -313,11 +315,13 @@ Dane piksele uznaje się za podobne, jeśli średnia jasność ich otoczenia
 jest zbliżona. Następnie, wartość danego piksela jest zastępowana
 średnią wartością wszystkich pikseli podobnych do niego.
 
+
 W przeciwieństwie do innych metod usuwania szumu, metoda ta nie jest lokalna,
 dla każdego piksela piksele podobne mogą się znajdować gdziekolwiek na zdjęciu.
 
 Algorytm ten usuwa szum nie niszcząc struktury i detali zdjęcia, jednakże
 czasami okazuje się mieć nieznaczne efekty. \newpage
+
 
 \subsection{Przykłady}
 \begin{figure}[H]
