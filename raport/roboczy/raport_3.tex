@@ -88,7 +88,7 @@
 \section{Rozszerzanie działalności programu}
 \subsection{Słowem wstępu...}
 Głównym celem naszego programu jest coś, co można nazwać
-ogólnie\footnote{konkretnie nasz cel zdefiniowaliśmy w poprzednim raporcie.}
+ogólnie (konkretnie nasz cel zdefiniowaliśmy w poprzednim raporcie)
 poprawą jakości skanów zdjęć analogowych. Trzeba jednak pamiętać,
 że najważniejszym ogniwem każdego problemu jest człowiek, którego
 problem ten dotyczy -- i któremu chce się pomóc oferując dane rozwiązania. \newline
@@ -216,6 +216,27 @@ przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać n
     \caption{Zdjęcie po normalizacji (zaszumione) wraz z histogramem.}
 \end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/2 normalizacja histogramu jasności/hist/motor_intensity.jpg}
+    \caption{Zdjęcie przed normalizacją wraz z histogramem.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/2 normalizacja histogramu jasności/hist/motor_after_intensity.jpg}
+    \caption{Zdjęcie po normalizacji (zaszumione) wraz z histogramem.}
+\end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/2 normalizacja histogramu jasności/before/kot2.jpg}
+%     \caption{Zdjęcie przed normalizacją wraz z histogramem.}
+% \end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/2 normalizacja histogramu jasności/after/kot2_after.jpg}
+%     \caption{Zdjęcie po normalizacji (zaszumione) wraz z histogramem.}
+% \end{figure}
 
 
 
@@ -232,6 +253,8 @@ między pikselami, ale także od różnic w intensywności koloru.
 
 Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu.
 
+\subsection{Przykłady}
+
 \begin{figure}[H]
     \centering
     \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos3/filtr bilateralny/test3.jpg}
@@ -245,7 +268,6 @@ Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym t
 
 
 
-\subsection{Przykłady}
 
 
 
@@ -259,23 +281,25 @@ która jest szeroko wykorzystywana w grafice komputerowej w celu uzyskania wygł
 Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do poprawy wizualnego odbioru zdjęcia.
 
 \subsection{Przykłady}
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=\linewidth, keepaspectratio]{}
-%     \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
-% \end{figure}
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=\linewidth, keepaspectratio]{}
-%     \caption{Zdjęcie po filtracji filtrem gaussowskim.}
-% \end{figure}
+probably złe zdjęcia -- praca domowa dla Karola.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos3/filtr gaussowski/test3.jpg}
+    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/filtr gaussowski/test3g.jpg}
+    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+\end{figure}
 
 
 
 
 
 
-\section{Usuwaniem szumu -- uśrednianie pikseli }
+\section{Usuwaniem szumu -- uśrednianie pikseli}
 \subsection{Metoda}
 Ta metoda polega na uśrednianiu pikseli w oparciu o ich otoczenie.
 
@@ -286,8 +310,39 @@ jest zbliżona. Następnie, wartość danego piksela jest zastępowana
 Dzięki temu szum zostaje zredukowany a krawędzie i granice różnych obrazów,
 są lepiej zachowane niż przy zwykłym rozmyciu.
 
-
 \subsection{Przykłady}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/srodmiescie_before_szum.jpg}
+    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/srodmiescie_after_szum.jpg}
+    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/motor_before_szum.jpg}
+    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/5 szum/motor_after_szum.jpg}
+    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/pogrzeb_ostrosc.png}
+    \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/pogrzeb_odszum.png}
+    \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+\end{figure}
 
 
 
@@ -305,6 +360,28 @@ tworząc obraz mniej rozmyty niż pierwotny. Uzyskany obraz mimo, że wyraźniej
 może okazać się mniej wiernym odwzorowaniem oryginalnego obrazu.
 
 \subsection{Przykłady}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dzieci.png}
+    \caption{Zdjęcie przed wyostrzeniem maską wyostrzającą.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dzieci_ostrosc.png}
+    \caption{Zdjęcie po wyostrzeniu maską wyostrzającą.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dziadek.png}
+    \caption{Zdjęcie przed wyostrzeniem maską wyostrzającą.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/6 wyostrzanie maską wyostrzającą/dziadek_ostrosc.png}
+    \caption{Zdjęcie po wyostrzeniu maską wyostrzającą.}
+\end{figure}
+
 
 
 
@@ -314,19 +391,23 @@ może okazać się mniej wiernym odwzorowaniem oryginalnego obrazu.
 
 
 \section{Przykładowe wykorzystanie programu jako całości}
+Nasz program daje wiele możliwości edycji zdjęć.
+
+Na podstawie naszych badań odkryliśmy,
+że kombinacją dającą w dużej części zdjęć bardzo dobre efekty
+było zastosowanie kolejno:
+usuwanie farfocli, poprawa ostrości i finalnie odszumianie.
+
+Po pewnym zastanowieniu nie jest to zbytnio zaskakujące, najpierw pozbywamy
+się elementów obcych ze zdjęcia, powstałych jako zanieczyszczenia fizyczne
+na samym zdjęciu. Następująca poprawa ostrości poprawia jakość, jednak kosztem
+zwiększania szumu -- efekt który niwelowany jest przed odszumianie.
+
+Oczywiście wybranie każde zdjęcie wymaga odpowiedniej obróbki dostosowanej
+do problemu
 
 
 
-
-
-
-
-\newpage
-
-\section{Dalsze kroki}
-Pracujemy obecnie nad stworzeniem bardziej przystępnego interfejsu okienkowego, a przy tym
-planujemy lepszą integrację poszczególnych elementów programu.
-W dalszym ciągu poszukujemy metod optymalizacji jego działania.
 
 \section{Dostępność programu}
 Na chwilę obecną nasze rozwiązanie jest zaawansowanym programem terminalowym,
@@ -376,10 +457,6 @@ Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w nast
     \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
     \item Filip Sajko -- pisanie raportu, implementacja w \LaTeXe{}.
 \end{itemize}
-
-
-
-
 
 
 
