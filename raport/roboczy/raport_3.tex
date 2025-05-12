@@ -9,15 +9,15 @@
 
 \usepackage{mdframed}
 \usepackage{hyperref}
-\usepackage[draft%      % dla obrazkow zakomentowac draft
+\usepackage[%draft%      % dla obrazkow zakomentowac draft
 ]{graphicx}  
 \usepackage{url}
 \usepackage{enumitem}
 \usepackage{verbatim}
+\usepackage{caption}
 
 
-
-\usepackage{caption}    
+    
 \usepackage{float}      
 
 
@@ -81,7 +81,7 @@
 % ADD KOREKTA
 \section{Korekta do raportu 2}
 \begin{itemize}
-    \item //to do
+    \item Dla zdjęcia dziewczyny z poprzedniego raportu szerokość filtru gaussowskiego $ =  37/71$.
 \end{itemize}
 
 
@@ -89,18 +89,20 @@
 \subsection{Słowem wstępu...}
 Głównym celem naszego programu jest coś, co można nazwać
 ogólnie\footnote{konkretnie nasz cel zdefiniowaliśmy w poprzednim raporcie.}
-poprawą jakość skanów zdjęć analogowych. Trzeba jednak pamiętać,
-że najważniejszym ogniwem każdego problemy jest człowiek, którego
+poprawą jakości skanów zdjęć analogowych. Trzeba jednak pamiętać,
+że najważniejszym ogniwem każdego problemu jest człowiek, którego
 problem ten dotyczy -- i któremu chce się pomóc oferując dane rozwiązania. \newline
 
 Tak więc łatwo zauważyć, że kluczowym elementem każdego programu jest dobrze wykonany
 interfejs użytkownika. W ostatecznym rozrachunku przecież gorszy
-jest przecież program z nawet najlepszym algorytmem skrytym pod płaszczem źle zaprojektowanego,
-nieczytelnego i nieprzyjaznego interfejsu od którego użytkownik się odbije
-i koniec końców z usług którego nie skorzysta. \newline
+jest przecież program z najlepszym algorytmem, ale złym interfejsem, z którego użytkownik i tak nie skorzysta. \newline
+
+% program z nawet najlepszym algorytmem skrytym pod płaszczem źle zaprojektowanego,
+% nieczytelnego i nieprzyjaznego interfejsu od którego użytkownik się odbije
+% i koniec końców z usług którego nie skorzysta. \newline
 
 Rozumiejąc tę potrzebę wraz z optymalizacją i rozszerzaniem funkcjonalności
-naszego programu stworzyliśmy interfejs użytkownika i zaczęliśmy % tja... na pewno
+naszego programu, stworzyliśmy interfejs użytkownika i zaczęliśmy % tja... na pewno
 tworzyć szczegółową instrukcję obsługi naszego programu.
 
 \subsection{Menu programu}
@@ -111,14 +113,14 @@ Na chwilę obecną główne menu naszego programu oferuje następujące opcje:
     \begin{tabular}{|c|l|}
         \hline
         Lp. & Opcja                                  \\ \hline
-        1   & usuwanie farfocli                      \\ \hline
-        2   & normalizacja histogramu jasności       \\ \hline
-        3   & filtracja filtrem bilateralnym         \\ \hline
-        4   & filtracja filtrem gassowskim           \\ \hline
-        5   & usuwaniem szumu -- uśrednianie pikseli \\ \hline
-        6   & wyostrzenie -- maska wyostrzająca      \\ \hline
+        1   & usuwanie farfocli                      \\ \hline      % done
+        2   & normalizacja histogramu jasności       \\ \hline      % done
+        3   & filtracja filtrem bilateralnym         \\ \hline      %       metoda
+        4   & filtracja filtrem gassowskim           \\ \hline      %       metoda
+        5   & usuwaniem szumu -- uśrednianie pikseli \\ \hline      %
+        6   & wyostrzenie -- maska wyostrzająca      \\ \hline      %
     \end{tabular}
-    \caption{Opcje główne naszego programu dostane dla użytkownika}
+    \caption{Opcje główne naszego programu dostępne dla użytkownika}
 \end{table}
 
 Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyżej tabeli opcji. \newpage
@@ -128,17 +130,190 @@ Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyżej tabeli op
 
 
 
-\section{Usuwanie farfocli                      }
+\section{Usuwanie farfocli}
+
+\subsection{Słowem wstępu}
+Jest to główny pierwotny cel naszego projektu i problem z którym się mierzyliśmy podczas poprzedniego etapu.
+
+Szczegółowo sposób wykrywania, usuwania tego typu artefaktów i normalizowania
+zdjęć nimi zanieczyszczonych opisaliśmy w poprzednim raporcie.
+
+W tej części chcielibyśmy zająć się głównie opisaniem efektów naszej pracy.
+
+\subsection{Efekty ogólne i ciekawe przypadki}
+W prawie wszystkich testowanych przez nas przypadkach działanie programu w sposób widoczny poprawiało jakość i estetykę zdjęcia.
+
+Co ciekawe, podczas naszych testów odkryliśmy, że ta nasza funkcjonalność
+wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się na zdjęciach:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/przed/gpt1.png}
+    \caption{Zdjęcie dziewczyny z wyraźnymi farfoclami.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos2/po/gpt1.png}
+    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $37/71$.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/pogrzeb_before.png}
+    \caption{Zdjęcie zarysowane.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/pogrzeb_after.png}
+    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $29/71$.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/dziewczyna_before.jpg}
+    \caption{Zdjęcie z zaciekami.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/dziewczyna_after.jpg}
+    \caption{Poprawione zdjęcie, szerokość filtru gaussowskiego $3/71$.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/farfocle4_before.jpg}
+    \caption{Zdjęcie zarysowane.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/farfocle4_after.jpg}
+    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $3/71$.}
+\end{figure}
+
+
+
+
+
+
 \section{Normalizacja histogramu jasności       }
+\subsection{Metoda}
+Wyrównanie histogramu jasności jest metodą przetwarzania obrazów, polegającą na
+poprawianiu kontrastu zdjęcia z wykorzystaniem jego histogramu -- który się normalizuje.
+
+\subsection{Przykłady}
+Metoda ta jest bardzo skuteczna w poprawianiu kontrastu zdjęcia -- choć niestety potrafi dziać się
+to kosztem jakości zdjęcia. Metoda ta nie rozróżnia sygnału od szumu co może spowodować wzrost wartości szumu,
+przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać na poniższym zdjęciu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/normalizacja histogramu/test2m.PNG}
+    \caption{Zdjęcie przed normalizacją wraz z histogramem.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/normalizacja histogramu/test2cm.PNG}
+    \caption{Zdjęcie po normalizacji (zaszumione) wraz z histogramem.}
+\end{figure}
+
+
+
+
+
 \section{Filtracja filtrem bilateralnym         }
+\subsection{Metoda}
+Filtr bilateralny jest nieliniowym filtrem wygładzającym, przede wszystkim charakteryzuje się tym,
+że zachowuje krawędzie i redukuje szum.
+
+Zastępuje on intensywność każdego
+piksela średnią ważoną intensywności pobliskich pikseli.
+Wagi tej średniej oparte są na rozkładzie Gaussa i jej wagi zależą nie tylko od odległości
+między pikselami, ale także od różnic w intensywności koloru.
+
+Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=90, width=\linewidth, keepaspectratio]{Photos3/filtr bilateralny/test3.jpg}
+    \caption{Zdjęcie pierwotne.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos3/filtr bilateralny/test3b.jpg}
+    \caption{Zdjęcie po zastosowaniu filtru bilateralnego.}
+\end{figure}
+
+
+
+\subsection{Przykłady}
+
+
+
 \section{Filtracja filtrem gassowskim           }
+\subsection{O rozmyciu gaussowskim}
+Filtracja filtrem gausowskim oparta jest na generowaniu maski poprzez tworzenie rozmycia gaussowskiego zdjęcia.
+
+Wygładzanie gaussowskie jest efektem rozmywania obrazu za pomocą funkcji rozkładu Gaussa,
+która jest szeroko wykorzystywana w grafice komputerowej w celu uzyskania wygładzenia obrazu i wyciszenia szumu informacyjnego.
+
+Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do poprawy wizualnego odbioru zdjęcia.
+
+\subsection{Przykłady}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth, keepaspectratio]{}
+%     \caption{Zdjęcie przed filtracją filtrem gaussowskim.}
+% \end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth, keepaspectratio]{}
+%     \caption{Zdjęcie po filtracji filtrem gaussowskim.}
+% \end{figure}
+
+
+
+
+
+
 \section{Usuwaniem szumu -- uśrednianie pikseli }
+\subsection{Metoda}
+Ta metoda polega na uśrednianiu pikseli w oparciu o ich otoczenie.
+
+Dane piksele uznaje się za podobne, jeśli średnia jasność ich otoczenia
+jest zbliżona. Następnie, wartość danego piksela jest zastępowana
+średnią wartością wszystkich pikseli podobnych do niego w danym obszarze.
+
+Dzięki temu szum zostaje zredukowany a krawędzie i granice różnych obrazów,
+są lepiej zachowane niż przy zwykłym rozmyciu.
+
+
+\subsection{Przykłady}
+
+
+
+
 \section{Wyostrzenie -- maska wyostrzająca      }
 
+\subsection{Metoda}
+Maskowanie nieostrości za pomocą maski nieostrości jest techniką wyostrzania obrazu
+powszechnie wykorzystywaną w obróbce fotografii w celu poprawy ostrości zdjęć.
+
+Nazwa pochodzi od faktu, że technika ta wykorzystuje rozmyty,
+`nieostry' negatyw obrazu do stworzenia maski obrazu oryginalnego.
+Maska nieostra jest następnie łączona z oryginalnym pozytywem,
+tworząc obraz mniej rozmyty niż pierwotny. Uzyskany obraz mimo, że wyraźniejszy
+może okazać się mniej wiernym odwzorowaniem oryginalnego obrazu.
+
+\subsection{Przykłady}
 
 
-\section{Eksperymenty -- studiom ciekawych przypadków}
-Tu będą wyniki naszych eksperymentów z ciekawych ustawień dla różnych zdjęć.
+
+
+
+
+
+
+\section{Przykładowe wykorzystanie programu jako całości}
 
 
 
@@ -156,7 +331,7 @@ W dalszym ciągu poszukujemy metod optymalizacji jego działania.
 \section{Dostępność programu}
 Na chwilę obecną nasze rozwiązanie jest zaawansowanym programem terminalowym,
 działającym na każdym systemie z dostępną i zainstalowaną biblioteką OpenCV oraz
-dowolnym kompilatorem języka C++ zdolnym do kompilacji na systemie tym lub pochodnym.
+dowolnym kompilatorem języka C++ zdolnym do kompilacji na tym systemie lub jego pochodnym.
 
 Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
 pod adresem:
@@ -199,8 +374,15 @@ Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w nast
     \item Aleksandra Wójcik -- skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu.
     \item Karol Sęk -- tworzenie, analizowanie i pisanie algorytmu.
     \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
-    \item Filip Sajko -- pisanie raportu, implementacja w \LaTeX{}.
+    \item Filip Sajko -- pisanie raportu, implementacja w \LaTeXe{}.
 \end{itemize}
+
+
+
+
+
+
+
 
 
 %                       Wersja alternatywna podziału obowiązków
