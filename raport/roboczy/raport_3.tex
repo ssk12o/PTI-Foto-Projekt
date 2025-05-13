@@ -9,7 +9,7 @@
 
 \usepackage{mdframed}
 \usepackage{hyperref}
-\usepackage[%draft%      % dla obrazkow zakomentowac draft
+\usepackage[draft%      % dla obrazkow zakomentowac draft
 ]{graphicx}  
 \usepackage{url}
 \usepackage{enumitem}
@@ -69,8 +69,8 @@
     w składzie:  Bartosz Wójcik, Katarzyna Szwed, Natalia Szymańska,
     Patrycja Szałajko, Aleksandra Wójcik, Karol Sęk, Michał Juszkiewicz, Filip Sajko.
 
-    W tym raporcie opiszemy nasze działania prowadzące do poprawy działania programu i opiszemy poprawki.
-    Zajmiemy się ponadto ekstensywnym testowaniem działania naszego programu i wyciągnięciem wniosków na temat jego działania i optymalnych ustawień.
+    W tym raporcie pokażemy co robiliśmy w kierunku poprawy działania programu i opiszemy te poprawki.
+    Zajmiemy się ponadto ekstensywnym testowaniem naszego programu i wyciągnięciem wniosków na temat jego działania i optymalnych ustawień.
 \end{abstract}
 
 \newpage
@@ -81,7 +81,7 @@
 % ADD KOREKTA
 \section{Korekta do raportu 2}
 \begin{itemize}
-    \item Dla zdjęcia dziewczyny z poprzedniego raportu szerokość filtru gaussowskiego $ =  37/71$.
+    \item Dla zdjęcia dziewczyny z poprzedniego raportu szerokość filtru gaussowskiego $ =  37$ pikseli.
 \end{itemize}
 
 
@@ -106,7 +106,7 @@ naszego programu, stworzyliśmy interfejs użytkownika i zaczęliśmy % tja... n
 tworzyć szczegółową instrukcję obsługi naszego programu.
 
 \subsection{Menu programu}
-Na chwilę obecną główne menu naszego programu oferuje następujące opcje:
+Obecnie główne menu naszego programu oferuje następujące opcje:
 
 \begin{table}[h]
     \centering
@@ -123,7 +123,7 @@ Na chwilę obecną główne menu naszego programu oferuje następujące opcje:
     \caption{Opcje główne naszego programu dostępne dla użytkownika}
 \end{table}
 
-Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyżej tabeli opcji. \newpage
+Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyższej tabeli opcji. \newpage
 
 
 
@@ -133,7 +133,7 @@ Teraz zajmiemy się szczegółowym omówieniem wymienionych w powyżej tabeli op
 \section{Usuwanie farfocli}
 
 \subsection{Słowem wstępu}
-Jest to główny cel naszego projektu i problem z którym się mierzyliśmy podczas poprzedniego etapu.
+Jest to jeden z głównych celów naszego projektu i problem z którym się mierzyliśmy podczas poprzedniego etapu.
 
 Szczegółowo sposób wykrywania, usuwania tego typu artefaktów i normalizowania
 zdjęć nimi zanieczyszczonych opisaliśmy w poprzednim raporcie.
@@ -143,8 +143,10 @@ W tej części chcielibyśmy zająć się głównie opisaniem efektów naszej pr
 \subsection{Efekty ogólne i ciekawe przypadki}
 W prawie wszystkich testowanych przez nas przypadkach działanie programu w sposób widoczny poprawiało jakość i estetykę zdjęcia.
 
-Co ciekawe, podczas naszych testów odkryliśmy, że ta nasza funkcjonalność
-wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się na zdjęciach:
+Nasz algorytm poza usuwaniem artefaktów opisywanych przez nas jako farfocle dobrze radzi sobie z usuwaniem nacieków, można
+to zauważyć na poniższych zdjęciach:
+%Co ciekawe, podczas naszych testów odkryliśmy, że ta nasza funkcjonalność
+%wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się na zdjęciach:
 
 \newpage
 
@@ -156,7 +158,7 @@ wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos2/po/gpt1.png}
-    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $37/71$.}
+    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $37$ pikseli.}
 \end{figure}
 
 \begin{figure}[H]
@@ -167,7 +169,7 @@ wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/pogrzeb_after.png}
-    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $29/71$.}
+    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $29$ pikseli.}
 \end{figure}
 
 \begin{figure}[H]
@@ -178,7 +180,7 @@ wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/dziewczyna_after.jpg}
-    \caption{Poprawione zdjęcie, szerokość filtru gaussowskiego $3/71$.}
+    \caption{Poprawione zdjęcie, szerokość filtru gaussowskiego $3$ piksele.}
 \end{figure}
 
 \begin{figure}[H]
@@ -189,7 +191,7 @@ wyjątkowo dobrze sobie z usuwaniem nacieków i zarysowań na znajdujących się
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/1 farfocle/farfocle4_after.jpg}
-    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $3/71$.}
+    \caption{Zdjęcie poprawione, szerokość filtru gaussowskiego $3$ piksele.}
 \end{figure}
 
 
@@ -207,8 +209,8 @@ Dzięki temu, fragmenty zdjęcia o pierwotnie niskim poziomie kontrastu stają s
 
 \subsection{Przykłady}
 Metoda ta jest bardzo skuteczna w poprawianiu kontrastu zdjęcia -- niestety czasem
-kosztem jakości zdjęcia. Metoda ta nie rozróżnia sygnału od szumu co może spowodować wzrost wartości szumu,
-przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać na poniższym zdjęciu.
+kosztem jakości zdjęcia, ponieważ nie rozróżnia ona sygnału od szumu często powoduje ona wzrost wartości szumu w przypadku, kiedy
+oryginalne zdjęcie ma mały kontrast. Widać to na poniższym zdjęciu:
 
 
 \begin{figure}[H]
@@ -232,7 +234,7 @@ przy jednoczesnym zmniejszeniu widoczności właściwego sygnału -- co widać n
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos3/2 normalizacja histogramu jasności/hist/motor_after_intensity.jpg}
-    \caption{Zdjęcie po normalizacji wraz z histogramem.}
+    \caption{Zdjęcie po normalizacji wraz z histogramem. Szum jest dużo mniejszy niż na poprzednim przykładzie.}
 \end{figure}
 
 % \begin{figure}[H]
@@ -258,7 +260,10 @@ Zastępuje on intensywność każdego piksela średnią ważoną intensywności 
 wyliczoną poprzez filtr o odpowiednim rozmiarze.
 Jeżeli wartość danego piksela jest bliska wartości piksela w centrum filtru, jego waga jest 
 oparta na rozkładzie Gaussa. W przeciwnym wypadku waga jest bliska 0.
-Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu. \newpage
+Ta złożona zależność pozwala zachować ostre krawędzie przy jednoczesnym tłumieniu szumu.
+
+Po zastosowaniu algorytmu zauważyliśmy bardzo niewielkie zmiany, zatem kontynuowaliśmy poszukiwanie lepszych rozwiązań.
+\newpage
 
 
 \subsection{Przykłady}
@@ -286,7 +291,8 @@ Filtracja filtrem gaussowskim oparta jest na generowaniu maski poprzez tworzenie
 Wygładzanie gaussowskie jest efektem rozmywania obrazu za pomocą funkcji rozkładu Gaussa,
 która jest szeroko wykorzystywana w grafice komputerowej w celu uzyskania wygładzenia obrazu i wyciszenia szumu informacyjnego.
 
-Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do poprawy wizualnego odbioru zdjęcia.
+Wygładzenie paradoksalnie pomimo utraty ostrości obrazu przyczynia się do poprawy wizualnego odbioru zdjęcia, jednak
+tak jak w przypadku filtru bilateralnego zmiany były mało zauważalne.
 
 \subsection{Przykłady}
 % probably złe zdjęcia -- praca domowa dla Karola.
@@ -319,8 +325,9 @@ jest zbliżona. Następnie, wartość danego piksela jest zastępowana
 W przeciwieństwie do innych metod usuwania szumu, metoda ta nie jest lokalna,
 dla każdego piksela piksele podobne mogą się znajdować gdziekolwiek na zdjęciu.
 
-Algorytm ten usuwa szum nie niszcząc struktury i detali zdjęcia, jednakże
-czasami okazuje się mieć nieznaczne efekty. \newpage
+Algorytm ten usuwa szum nie niszcząc struktury i detali zdjęcia, ze wszystkich trzech
+wypróbowanych przez nas metod na usuwanie szumu ta sprawdza się najlepiej.
+ \newpage
 
 
 \subsection{Przykłady}
@@ -369,8 +376,8 @@ powszechnie wykorzystywaną w obróbce fotografii w celu poprawy ostrości zdję
 Nazwa pochodzi od faktu, że technika ta wykorzystuje rozmyty,
 `nieostry' negatyw obrazu do stworzenia maski obrazu oryginalnego.
 Maska nieostra jest następnie łączona z oryginalnym pozytywem,
-tworząc obraz mniej rozmyty niż pierwotny. Uzyskany obraz mimo, że wyraźniejszy
-może okazać się mniej wiernym odwzorowaniem oryginalnego obrazu.
+tworząc obraz mniej rozmyty niż pierwotny. Algorytm pomimo wyostrzenia obrazu dodaje
+do niego szum, z którym możemy walczyć za pomocą zaimplementowanych przez nas algorytmów odszumiających.
 
 \subsection{Przykłady}
 \begin{figure}[H]
@@ -409,8 +416,8 @@ Aby zmaksymalizować jego skuteczność, przeprowadziliśmy dodatkowe badania,
 mające na celu ustalenie najefektywniejszej metody użycia. Odkryliśmy, że najlepsze efekty osiągamy,
 stosując kolejno narzędzia do usuwania farfocli, poprawiania ostrości oraz odszumiania.
 
-Dzieje się tak dlatego, że najpierw eliminujemy obce elementy,
-powstałe jako zanieczyszczenia fizyczne podczas skanowania.
+Dzieje się tak dlatego, że najpierw eliminujemy artefakty,
+powstałe podczas wywoływania i skanowania zdjęcia.
 Kolejny etap -- poprawianie ostrości -- zwiększa jednak poziom szumu,
 dlatego końcowe odszumianie cofa niepożądane skutki uboczne poprzedniego kroku.
 
