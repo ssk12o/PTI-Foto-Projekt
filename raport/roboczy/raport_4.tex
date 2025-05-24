@@ -1,0 +1,147 @@
+\documentclass[]{mwart}
+
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage[%draft%      % dla obrazkow zakomentowac draft
+]{graphicx}  
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{verbatim}
+\usepackage{caption}
+
+
+    
+\usepackage{float}      
+
+
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\includegraphics[height=0.666cm]{wspolne_dla_wszystkich/logo_projektu.png}}
+\fancyhead[C]{\textit{Poprawa jakości zdjęć}}
+\fancyhead[R]{\includegraphics[height=0.9cm]{wspolne_dla_wszystkich/logo_uczelni.png}}
+\fancyfoot[C]{\thepage}
+
+\setlength{\headheight}{20pt}  
+
+
+
+\usepackage{listings}
+\usepackage{xcolor} 
+
+
+
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_uczelni.png}
+\end{figure}
+
+
+\begin{center}
+    {\LARGE \textbf{Poprawa jakości skanów zdjęć wykonanych techniką analogową
+        }} \\[0.3cm]
+    {\large \textbf{Raport III}} \\[0.2cm]
+    \textit{projekt realizowany pod opieką prof. dr hab. inż. Artura Przelaskowskiego}
+
+\end{center}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_projektu.png}
+\end{figure}
+
+\vfill
+\begin{abstract}
+    Raport 4 projektu poprawy jakości cyfrowych skanów zdjęć wykonanych techniką analogową przez grupę nr 9 (wtorkową z godziny 18)
+    w składzie:  Bartosz Wójcik, Katarzyna Szwed, Natalia Szymańska,
+    Patrycja Szałajko, Aleksandra Wójcik, Karol Sęk, Michał Juszkiewicz, Filip Sajko.
+
+    W tym raporcie...
+\end{abstract}
+
+\newpage
+\tableofcontents{}
+
+\newpage
+
+\section{Korekta do raportu 2}
+\begin{itemize}
+    \item
+    \item
+    \item
+    \item
+\end{itemize}
+
+
+
+
+\section{Dostępność programu}
+Na chwilę obecną nasze rozwiązanie jest zaawansowanym programem terminalowym,
+kompilowalnym na każdym systemie z dostępną i zainstalowaną biblioteką OpenCV oraz
+dowolnym kompilatorem języka C++ zdolnym do kompilacji na tym systemie lub jego pochodnym.
+
+Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
+pod adresem:
+\begin{center}
+    \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+\end{center}
+skąd można go łatwo pobrać, skompilować i wykorzystywać dowolnie (choć zgodnie z przeznaczeniem!).
+
+
+
+
+\newpage
+\section{Wykorzystywane narzędzia}
+W tej części naszego projektu korzystaliśmy z następujących narzędzi:
+
+\[\mathbb{TO\_BE\_UPDATED}\] Trzeba dodać nowe rzeczy, w tym programy testowane
+
+\begin{itemize}
+    \item Programu i języka Matlab -- do analizy zdjęć;
+    \item Języka C++ -- do napisania programu usuwającego artefakty;
+    \item Programu VS Code -- do tworzenia, edycji i dokumentacji kodu programu i raportów;
+    \item Programu LibreOffice Calc -- do analizy części danych numerycznych;
+    \item $\LaTeXe{}$ -- do przygotowania raportu;
+    \item Strony Github i programu Git -- do udostępniania, dystrybucji i pracy nad kodem;
+    \item 7zip -- do kompresji zdjęć;
+    \item Google Drive -- do udostępniania części dużych plików;
+    \item Skanera minilab Noritsu HS-1800 -- do w dalszej części wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
+    \item Aparatów:
+          \begin{itemize}
+              \item Canon EOS 300 z obiektywem Tamron 28-105mm 1:4-5.6 i kliszą Fomapan 400
+              \item Fujifilm FinePix L55 Digital Camera -- Black (12MP, 3x Optical Zoom)
+          \end{itemize}
+\end{itemize}
+
+
+\section{Podział obowiązków}
+Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
+
+\[\mathbb{TO\_BE\_UPDATED}\]
+\begin{itemize}
+    \item Bartosz Wójcik -- wykonywanie, skanowanie i analiza zdjęć; research.
+    \item Katarzyna Szwed -- korekta raportu; analiza zdjęć i działania programu.
+    \item Natalia Szymańska -- pisanie raportu.
+    \item Patrycja Szałajko -- zarządzanie pracą zespołu, kontakt.
+    \item Aleksandra Wójcik -- skanowanie zdjęć rodzinnych w celu polepszenia ich jakości w końcowych etapach projektu.
+    \item Karol Sęk -- tworzenie, analizowanie i pisanie algorytmu.
+    \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
+    \item Filip Sajko -- pisanie raportu, implementacja w \LaTeXe{}.
+\end{itemize}
+
+
+
+\end{document}
