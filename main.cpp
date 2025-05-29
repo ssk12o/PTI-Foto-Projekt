@@ -4,6 +4,7 @@
 #include <thread>
 #include <filesystem>
 #include <map>
+#include <locale>
 #include "photo.hpp"
 #include "hnorm.hpp"
 #include "filter.hpp"
@@ -53,19 +54,22 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    locale::global(locale("pl_PL.UTF-8"));
+    cout.imbue(locale());
+
     path inputPath = argv[1];
     path outputPath = argv[2];
     string pti = "/PTI_";
     char read;
 
 
-    cout << "Wybierz operacje:\n"
+    cout << "Wybierz operację:\n"
     "1 - usuwanie farfocli\n"
-    "2 - normalizacja histogramu jasnosci\n"
+    "2 - normalizacja histogramu jasności\n"
     "3 - filtracja filtrem bilateralnym\n"
     "4 - filtracja filtrem gaussowskim\n"
-    "5 - usuwanie szumu usrednianiem pikseli\n"
-    "6 - wyostrzanie maska wyostrzajaca\n";
+    "5 - usuwanie szumu uśrednianiem pikseli\n"
+    "6 - wyostrzanie maską wyostrzająca\n";
     cin >> read;
 
     if(read != '1'){
@@ -103,7 +107,7 @@ int main(int argc, char* argv[]) {
         bool break_while = false;
         while(!break_while){
             int opt;
-            cout<< "Parameters to change - 5:\n"
+            cout<< "Parameterów do zmiany - 5:\n"
                 << "\t1 - Początkowa szerokość filtru gaussowskiego = 1 piks. (musi być nieparzysta)\n"
                 << "\t2 - Pojedyncza zmiana szerokości filtru gaussowskiego = 2 piks. (musi być parzysta)\n"
                 << "\t3 - Graniczna szerokość filtru gaussowskiego = 69 piks.\n"
