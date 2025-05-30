@@ -7,8 +7,8 @@ LIB_PATH = .
 CXXFLAGS = /c /I $(INCLUDE_PATH) /Zi /EHsc /std:c++17
 LDFLAGS = /LIBPATH:$(LIB_PATH) opencv_world4110.lib
 
-SOURCES = main.cpp photo.cpp hnorm.cpp filter.cpp
-OBJECTS = main.obj photo.obj hnorm.obj filter.obj
+SOURCES = main.cpp photo.cpp hnorm.cpp filter.cpp metrics.cpp
+OBJECTS = main.obj photo.obj hnorm.obj filter.obj metrics.obj
 OUTPUT = program.exe
 
 all: $(OUTPUT)
