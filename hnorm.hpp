@@ -15,5 +15,5 @@ vector<vector<unsigned char>> createFixed(vector<vector<unsigned char>> Ivals, u
 
 Mat getHnorm(Photo image);
 
-
+Mat getHnorm(Mat image);
 

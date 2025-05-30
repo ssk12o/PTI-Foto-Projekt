@@ -98,3 +98,31 @@ Mat getHnorm(Photo image) {
 
     return FValue;
 }
+
+Mat getHnorm(Mat value){
+    uchar u;
+    Mat FValue = Mat(value.rows, value.cols, CV_8UC1);
+    vector<vector<unsigned char>> Ivals = vector<vector<unsigned char>>(value.rows, vector<unsigned char>(value.cols, 0));
+    vector<vector<unsigned char>> FIvals;
+    vector<pair<unsigned char, int>> List;
+    vector<pair<unsigned char, int>> Dist;
+    unordered_map<unsigned char, int> DistMap;
+
+    for (int i = 0; i < value.rows;i++) {
+        for (int j = 0;j < value.cols;j++) {
+            Ivals[i][j] = value.at<uchar>(i, j);
+        }
+    }
+    List = createValueList(Ivals);
+    Dist = createDist(List);
+    DistMap = createDistMap(Dist);
+    FIvals = createFixed(Ivals, DistMap, Dist[0].second);
+
+    for (int i = 0; i < value.rows;i++) {
+        for (int j = 0;j < value.cols;j++) {
+            FValue.at<uchar>(i, j) = FIvals[i][j];
+        }
+    }
+
+    return FValue;
+}

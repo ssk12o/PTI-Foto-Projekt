@@ -34,6 +34,9 @@ void other(path input,path output,char read){
         case '6':
             fixed = getUnsharpMask(image);
             break;
+        case '7':
+            fixed = getAdaptive(image);
+            break;
         default:
             skip = true;
             break;
@@ -69,7 +72,8 @@ int main(int argc, char* argv[]) {
     "3 - filtracja filtrem bilateralnym\n"
     "4 - filtracja filtrem gaussowskim\n"
     "5 - usuwanie szumu uśrednianiem pikseli\n"
-    "6 - wyostrzanie maską wyostrzająca\n";
+    "6 - wyostrzanie maską wyostrzająca\n"
+    "7 - metoda adaptacyjna\n";
     cin >> read;
 
     if(read != '1'){
