@@ -115,6 +115,8 @@ Filtr korekty histogramu kontrastu jest aplikowany na początku,
 by poprawić czytelność zdjęcia dla następnych filtrów.
 Poniżej dokładniej opisaliśmy działanie każdego etapu korekty.
 
+\newpage
+
 \begin{figure}[H]
     \centering
     \includegraphics[angle=90,width=\linewidth, keepaspectratio]{Photos4/syrenka.jpg}
@@ -123,9 +125,10 @@ Poniżej dokładniej opisaliśmy działanie każdego etapu korekty.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos4/syrenka_PTI.jpg}
-    \caption{Zdjęcie poprawione -- po obróbce.}
+    \caption{Zdjęcie poprawione -- metodą adaptacyjną.}
 \end{figure}
 
+\vfill
 \subsection{Normalizacja histogramu kontrastu}
 W pierwszym kroku program podejmuje decyzję czy zaaplikować filtr
 poprawy kontrastu. Filtr ten często zwiększa wartość szumu na zdjęciu,
@@ -139,11 +142,9 @@ zebraliśmy na potrzeby projektu.
 \subsection{Filtr bilateralny}
 Zaszumienie zdjęcia definiuje się jako losowe zakłócenia wartości pikseli zdjęcia.
 
-Zaszumienie zdjęcia definiuje się jako losowe
-zakłócenia wartości pikseli zdjęcia.
 W drugim kroku program aplikuje filtr bilateralny,
 którego siła jest oceniana na podstawie pomiaru szumu na zdjęciu.
-Wartość szumu ustalana jest aplikując maskę\footnote{\label{przyp1}Immerkær, J. (1996). Fast Noise Variance Estimation. Computer Vision and Image Understanding, doi:10.1006/cviu.1996.0060, strona 300 }
+Wartość szumu ustalana jest aplikując maskę\footnote{\label{przyp1} Źródło użytych operatorów: Immerkær, J. (1996). Fast Noise Variance Estimation. Computer Vision and Image Understanding, doi:10.1006/cviu.1996.0060, strona 300 }
 wykrywającą szum:
 \[  L = \begin{bmatrix}
         1  & -2 & 1  \\
@@ -159,9 +160,8 @@ wartości szumu.
 \subsection{Wyostrzenie zdjęcia}
 W ostatnim kroku dobierane są parametry do filtru wyostrzającego
 na podstawie wartości akutancji.
-Aby obliczyć tą metrykę najpierw aplikowany jest operator Laplace'a,
-którym wydobywamy\textsuperscript{\ref{przyp1}}
-krawędzie z obrazu:
+Aby obliczyć tą metrykę najpierw aplikowany jest operator Laplace'a\textsuperscript{\ref{przyp1}},
+którym wydobywamy krawędzie z obrazu:
 \[  L = \begin{bmatrix}
         0  & -1 & 0  \\
         -1 & 4  & -1 \\
@@ -211,6 +211,7 @@ Wadą programu jest nieintuicyjne rozmieszczenie parametrów, funkcje przydatne 
     \caption{Zdjęcie poprawione -- po obróbce w GIMP-ie.}
 \end{figure}
 
+\vfill
 \subsection{PhotoGlory}
 PhotoGlory jest profesjonalną aplikacją do naprawy zdjęć. Poradziła sobie ona bardzo dobrze z poprawą jasności i kontrastu, zaciemnione wcześniej detale zaczęły być widoczne. Narzędzie to również skutecznie usuwa szumy przy zachowaniu ostrości na zdjęciu.
 
@@ -228,8 +229,8 @@ Aplikacja jest łatwiejsza w obsłudze niż GIMP, posiada mniej narzędzi, bo sp
 
 
 
-
-\subsection{ Hotpot.ai}
+\vfill
+\subsection{Hotpot.ai}
 Hotpot.ai to narzędzie AI udostępniane do użytku online. Na stronie internetowej dostępne są opcje generowania zdjęć i tekstu, a także poprawiania jakości zdjęć. Skorzystaliśmy z narzędzia służącego do naprawy starych fotografii.
 
 Ze wszystkich testowanych przez nas narzędzi to poradziło sobie najlepiej z odszumianiem i poprawianiem ostrości zdjęcia. Na fotografii wynikowej nie widać ziarna, czego inne testowane przez nas algorytmy nie były w stanie tego osiągnąć bez kompletnej utraty ostrości, a tutaj krawędzie nie tylko pozostały ostre, ale też są bardziej uwydatnione
@@ -238,6 +239,7 @@ Pomimo poprawy kontrastu zdjęcia główny obiekt na zdjęciu (w tym przypadku w
 
 Zaletą narzędzia AI jest wygoda - wystarczy wrzucić zdjęcie na stronę i chwilę zaczekać, nie trzeba dostosowywać żadnych parametrów, proces jest w pełni zautomatyzowany. Wadą tego programu z kolei jest to, że wyniki nie zawsze są powtarzalne. W przypadku AI również często pojawiają się obawy związane z prywatnością i etycznością takich rozwiązań.
 
+\newpage
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/syrenka_oryginal.png}
@@ -250,9 +252,112 @@ Zaletą narzędzia AI jest wygoda - wystarczy wrzucić zdjęcie na stronę i chw
 \end{figure}
 
 \newpage
-\section{Pokazane wyniki zdjęć po przeróbce}
+\section{Porównanie zdjęć}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/jamnik_org.jpg}
+    \caption{Zdjęcie oryginalne.}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/jamnik_farfocle.png}
+    \caption{Zdjęcie z dodanymi farfoclami. }
+\end{figure}
+
+
+Na innych edytowanych przez nas zdjęciach nie pojawił się problem “farfocli”, więc w celu zweryfikowania jak nasz algorytm sobie poradził w walce z farfoclami ręcznie dodaliśmy farfocle na zdjęcie jamnika.
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/jamnik_PTI.png}
+    \caption{Zdjęcie poprawione naszym programem.}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/jamnik_farfocle_photoglory.png}
+    \caption{Zdjęcie poprawione za pomocą aplikacji PhotoGlory.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/jamnik_farfocle_hotpotai.png}
+    \caption{Zdjęcie poprawione w programie Hotpot.ai.}
+\end{figure}
+
+
+Nasze narzędzie, jak już prezentowaliśmy we wcześniejszych raportach, bardzo dobrze radzi sobie z usuwaniem farfocli, jednak w przypadku dużych farfocli na zdjęciu nadal pozostają ślady. W aplikacji PhotoGlory niestety zabrakło narzędzia dedykowanego do usuwania farfocli. Za to Hotpot.ai sobie z tym zadaniem bardzo dobrze poradziło, nawet lepiej niż nasze narzędzie, bo na zdjęciu nie zostały prawie żadne ślady.
+
+Pomimo tego, uważamy, że nasze narzędzie nadal wypada dobrze na tle AI ze względu na obawy użytkowników związane z AI. Także nasz program jest w pełni bezpłatny i umożliwia masowe przerabianie zdjęć w krótkim czasie, gdy AI przeznacza kilka minut na jedno zdjęcie.
+
+Niżej zdjęcia pokazane w celu dalszego porównanie narzędzi, specyfika narzędzi została opisana wyżej, dalsze wnioski z porównania wyciągniemy w następnej sekcji.
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci.png}
+    \caption{Zdjęcie dzieci -- oryginał.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci_gimp.png}
+    \caption{Zdjęcie dzieci -- poprawione w programie Gimp. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/dzieci_photoglory.png}
+    \caption{Zdjęcie dzieci -- poprawione w programie PhotoGlory.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci_hotpot.png}
+    \caption{Zdjęcie dzieci -- poprawione w programie Hotpot.ai.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci_PTI.png}
+    \caption{Zdjęcie dzieci -- poprawione w naszym programie. }
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb.png}
+    \caption{Zdjęcie pogrzebu -- oryginał.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb_gimp.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w programie Gimp. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/pogrzeb_photoglory.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w programie PhotoGlory. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb_hotpot.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w programie Hotpot. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb_PTI.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w naszym programie.}
+\end{figure}
+
 
 \section{Podsumowanie}
+W porównaniu do innych narzędzi nasz program bardzo dobrze sobie radzi z wyostrzaniem zdjęć i naprawą kontrastu zdjęcia. Za to inne programy, zwłaszcza Hotpot.ai, odszumiają zdjęcia znacznie lepiej od naszego. GIMP to jedyne z narzędzi, które dobrze sobie radzi z usuwaniem zagięć. W kwestii farfocli najlepiej poradziło sobie Hotpot.ai, ale nasz program był niewiele gorszy.
+
+Atutem naszego programu jest prostota użycia i mała ilość czasu, którą trzeba przeznaczyć na obróbkę jednego zdjęcia. Również w żadnym innym programie nie było jednocześnie trybu automatycznego i możliwości ręcznego ustawiania parametrów, my oferujemy oba rozwiązania. Uważamy, że nasze narzędzie, pomimo pewnych ograniczeń, można uznać za konkurencyjne.
 
 
 
@@ -316,10 +421,10 @@ Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w nast
 
 
 \section{Bibliografia}
-W tej części raoportu kożystaliśmy z następujących prac naukowych i źródeł akademickich:
-\begin{itemize}
+
+\begin{enumerate}
     \item Immerkær, J. (1996). Fast Noise Variance Estimation. Computer Vision and Image Understanding, doi:10.1006/cviu.1996.0060.
-\end{itemize}
+\end{enumerate}
 
 
 \end{document}
