@@ -17,7 +17,9 @@
 
 
 
-\usepackage{caption}    
+\usepackage{caption}   
+\usepackage{subcaption}
+
 \usepackage{float}      
 
 
@@ -62,7 +64,7 @@
 \begin{center}
     {\LARGE \textbf{Poprawa jakości skanów zdjęć wykonanych techniką analogową
         }} \\[0.3cm]
-    {\large \textbf{Raporty I-III}} \\[0.2cm]
+    {\large \textbf{Raporty I-V}} \\[0.2cm]
     \textit{projekt realizowany pod opieką prof. dr hab. inż. Artura Przelaskowskiego}
 
 \end{center}
@@ -1262,7 +1264,17 @@ Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w nast
 
 
 
+
+
+
+
+
+
+
+
+
 \newpage
+
 \part{}
 \thispagestyle{empty}
 
@@ -1683,6 +1695,998 @@ Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w nast
     \item Michał Juszkiewicz -- tworzenie, analizowanie i pisanie algorytmu.
     \item Filip Sajko -- pisanie raportu, implementacja w \LaTeXe{}.
 \end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\part{}
+\thispagestyle{empty}
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_uczelni.png}
+% \end{figure}
+
+
+\begin{center}
+    {\LARGE \textbf{Poprawa jakości skanów zdjęć wykonanych techniką analogową
+        }} \\[0.3cm]
+    {\large \textbf{Raport IV}} \\[0.2cm]
+    \textit{projekt realizowany pod opieką prof. dr hab. inż. Artura Przelaskowskiego}
+
+\end{center}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_projektu.png}
+\end{figure}
+
+\vfill
+\begin{abstract}
+    Raport 4 projektu poprawy jakości cyfrowych skanów zdjęć wykonanych techniką analogową przez grupę nr 9 (wtorkową z godziny 18)
+    w składzie:  Bartosz Wójcik, Katarzyna Szwed, Natalia Szymańska,
+    Patrycja Szałajko, Aleksandra Wójcik, Karol Sęk, Michał Juszkiewicz, Filip Sajko.
+
+    Na tym etapie projektu dodaliśmy tryb automatycznej korekty zdjęcia --
+    dodaliśmy presety wartości do poszczególnych filtrów oraz tryb automatycznego doboru filtrów.
+    Będziemy również porównywać nasz program z popularnymi narzędziami do obróbki zdjęć - Gimp, PhotoGlory oraz HotpotAI.
+    Na podstawie zestawienia wyników otrzymanych za pomocą tych trzech narzędzi ustalimy wady i zalety naszego rozwiązania.
+\end{abstract}
+
+
+\newpage
+
+% \section{Korekta do raportu 3}
+% \begin{itemize}
+%     \item
+%     \item
+%     \item
+%     \item
+% \end{itemize}
+
+
+\section{Tryb automatyczny (presety)}
+Każdy z filtrów dostępnych w naszym programie oblicza domyślne
+wartości dla danego zdjęcia na podstawie kontrastu, ostrości i
+poziomu zaszumienia zdjęcia.
+W programie nadal pozostaje opcja ręcznego ustawiania wartości
+dla niestandardowych zdjęć.
+
+Wprowadziliśmy także metodę adaptacyjną, wykorzystuje ona trzy
+filtry do poprawy zdjęcia:
+\begin{center}
+    Normalizacja histogramu jasności $\to$ Filtr bilateralny $\to$ Wyostrzenie zdjęcia
+\end{center}
+
+Dokładne działanie pojedynczych filtrów opisaliśmy we wcześniejszych raportach.
+
+Program dobiera odpowiednie wartości dla filtrów (lub który filtr zaaplikować)
+na podstawie 3 metryk - odchylenie standardowe jasności dla filtru
+korekty histogramu jasności, odchylenie standardowe szumu dla
+filtru bilateralnego, wartości akutancji zdjęcia dla filtru
+poprawy ostrości. Filtr wyostrzający jest stosowany na końcu,
+przed filtrem usuwającym szum,
+ponieważ wyostrzanie podbija istniejący na obrazie szum.
+Filtr korekty histogramu kontrastu jest aplikowany na początku,
+by poprawić czytelność zdjęcia dla następnych filtrów.
+Poniżej dokładniej opisaliśmy działanie każdego etapu korekty.
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=90,width=\linewidth, keepaspectratio]{Photos4/syrenka.jpg}
+    \caption{Zdjęcie przed obróbką.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/syrenka_PTI.jpg}
+    \caption{Zdjęcie poprawione -- metodą adaptacyjną.}
+\end{figure}
+
+\vfill
+\subsection{Normalizacja histogramu kontrastu}
+W pierwszym kroku program podejmuje decyzję czy zaaplikować filtr
+poprawy kontrastu. Filtr ten często zwiększa wartość szumu na zdjęciu,
+zatem w przypadku gdy normalizacja histogramu nie jest konieczna
+zaaplikowanie tego filtru może znacząco pogorszyć jakość zdjęcia.
+Krok ten jest pomijany, kiedy odchylenie standardowe jasności
+jest większe niż 0,2. Wartość progu została dobrana metodą prób
+i błędów tak, aby nasz program działał dobrze dla zdjęć, które
+zebraliśmy na potrzeby projektu.
+
+\subsection{Filtr bilateralny}
+Zaszumienie zdjęcia definiuje się jako losowe zakłócenia wartości pikseli zdjęcia.
+
+W drugim kroku program aplikuje filtr bilateralny,
+którego siła jest oceniana na podstawie pomiaru szumu na zdjęciu.
+Wartość szumu ustalana jest aplikując maskę\footnote{\label{przyp1} Źródło użytych operatorów: Immerkær, J. (1996). Fast Noise Variance Estimation. Computer Vision and Image Understanding, doi:10.1006/cviu.1996.0060, strona 300 }
+wykrywającą szum:
+\[  L = \begin{bmatrix}
+        1  & -2 & 1  \\
+        -2 & 4  & -2 \\
+        1  & -2 & 1
+    \end{bmatrix}   \]
+
+Następnie z powstałego obrazu wyliczane jest odchylenie standardowe,
+by ustalić jak bardzo obraz jest zaszumiony. Finalnie aplikowany jest
+filtr bilateralny o odchyleniu standardowym równym 9-krotności
+wartości szumu.
+
+\subsection{Wyostrzenie zdjęcia}
+W ostatnim kroku dobierane są parametry do filtru wyostrzającego
+na podstawie wartości akutancji.
+Aby obliczyć tą metrykę najpierw aplikowany jest operator Laplace'a\textsuperscript{\ref{przyp1}},
+którym wydobywamy krawędzie z obrazu:
+\[  L = \begin{bmatrix}
+        0  & -1 & 0  \\
+        -1 & 4  & -1 \\
+        0  & -1 & 0
+    \end{bmatrix}\]
+
+Następnie obliczana jest średnia wartość po zaaplikowaniu operatora
+(im ostrzejsze krawędzie, tym ostrzejszy obraz).
+Jeśli ta wartość przekracza 5,0 to filtr nie jest aplikowany,
+by nie wprowadzać dodatkowego szumu.
+Jeśli filtr wyostrzający jest aplikowany to wartości filtra
+Gaussowskiego są obliczane na podstawie wyznaczonych wcześniej metryk:
+\begin{itemize}[label={}, leftmargin=*]
+    \item $\sigma$ -- odchylenie standardowe
+    \item A -- wartość sredniej akutancji
+    \item d -- szerokość filtra
+    \item
+    \item $\sigma = 5,0 - A$
+    \item $d = 3 \sigma$
+\end{itemize}
+
+
+
+\section{ Opis alternatywnych narzędzi do poprawy jakości zdjęć}
+W celu zbadania mocnych i słabych stron naszego programu porównamy
+go z innymi rozwiązaniami. Na podstawie tego zestawienia ustalimy,
+które aspekty naszego narzędzia wymagają poprawy,
+a które dają satysfakcjonujące efekty i wybijają nasze rozwiązanie na
+tle innych. Niżej opiszemy działanie programów GIMP,
+PhotoGlory i Hotpot.ai, które zawrzemy w naszym zestawieniu.
+
+\subsection{GIMP}
+GIMP (GNU Image Manipulation Program) to popularne narzędzie Open Source do obróbki zdjęć. Program oferuje szeroką gamę funkcji służących do regulacji jasności i kontrastu, redukcji szumów i usuwania obiektów (np. zagięć) ze zdjęć.
+
+Dostosowanie kontrastu i jasności było bardzo łatwe, a wyniki satysfakcjonujące. GIMP oferuje wiele opcji kontroli cieni, natomiast zauważalny jest brak narzędzi do precyzyjnego zarządzania jasnymi partiami obrazu - rozjaśnianie ciemnych obszarów prowadzi do prześwietlenia jasnych elementów, takich jak niebo na przykładzie zdjęcia syrenki. Program gorzej sobie radzi z poprawą ostrości, brak w nim funkcji do tego dedykowanych.  Jeżeli chodzi o redukcję szumów, GIMP wypada bardzo dobrze. Program posiada wiele zaawansowanych wyspecjalizowanych narzędzi do odszumiania zdjęć.
+
+Wadą programu jest nieintuicyjne rozmieszczenie parametrów, funkcje przydatne przy poprawie jakości zdjęcia wymagają ich poszukiwania w obszernym menu. Liczba opcji też może być przytłaczająca dla początkującego użytkownika. Poprawa jakości zdjęć w programie GIMP również zajmuje bardzo dużo czasu i dla uzyskania dobrych rezultatów wymagane są zaawansowane umiejętności obsługi tego programu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/syrenka_oryginal.png}
+    \caption{Zdjęcie przed obróbką w GIMP-ie.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/syrenka_gimp.png}
+    \caption{Zdjęcie poprawione -- po obróbce w GIMP-ie.}
+\end{figure}
+
+\vfill
+\subsection{PhotoGlory}
+PhotoGlory jest profesjonalną aplikacją do naprawy zdjęć. Poradziła sobie ona bardzo dobrze z poprawą jasności i kontrastu, zaciemnione wcześniej detale zaczęły być widoczne. Narzędzie to również skutecznie usuwa szumy przy zachowaniu ostrości na zdjęciu.
+
+Aplikacja jest łatwiejsza w obsłudze niż GIMP, posiada mniej narzędzi, bo specjalizuje się konkretnie w naprawie zdjęć, jej cel jest mniej ogólny. Opcje są łatwe do zrozumienia i szczegółowo opisane. PhotoGlory można uznać za narzędzie bardzo intuicyjne w obsłudze. Wadą tego rozwiązania jest jednak ilość czasu poświęcona na naprawę jednego zdjęcia.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/syrenka_oryginal.png}
+    \caption{Zdjęcie przed obróbką w PhotoGlory.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/syrenka_photoglory.png}
+    \caption{Zdjęcie poprawione -- po obróbce w PhotoGlory.}
+\end{figure}
+
+
+
+\vfill
+\subsection{Hotpot.ai}
+Hotpot.ai to narzędzie AI udostępniane do użytku online. Na stronie internetowej dostępne są opcje generowania zdjęć i tekstu, a także poprawiania jakości zdjęć. Skorzystaliśmy z narzędzia służącego do naprawy starych fotografii.
+
+Ze wszystkich testowanych przez nas narzędzi to poradziło sobie najlepiej z odszumianiem i poprawianiem ostrości zdjęcia. Na fotografii wynikowej nie widać ziarna, czego inne testowane przez nas algorytmy nie były w stanie tego osiągnąć bez kompletnej utraty ostrości, a tutaj krawędzie nie tylko pozostały ostre, ale też są bardziej uwydatnione
+
+Pomimo poprawy kontrastu zdjęcia główny obiekt na zdjęciu (w tym przypadku warszawska syrenka) nie stał się bardziej widoczny, algorytm nie usunął cienia z ciemnych obszarów i detale pozostają ukryte. Użytkownik nie może dostosować algorytmu do swoich potrzeb, więc wyniki mogą być pod pewnymi względami rozczarowujące. Narzędzie nie było w stanie rozpoznać elementów ciemnych z powodu niedoświetlenia od tych, które były ciemne z natury.
+
+Zaletą narzędzia AI jest wygoda - wystarczy wrzucić zdjęcie na stronę i chwilę zaczekać, nie trzeba dostosowywać żadnych parametrów, proces jest w pełni zautomatyzowany. Wadą tego programu z kolei jest to, że wyniki nie zawsze są powtarzalne. W przypadku AI również często pojawiają się obawy związane z prywatnością i etycznością takich rozwiązań.
+
+\newpage
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/syrenka_oryginal.png}
+    \caption{Zdjęcie przed obróbką w Hotpot.ai.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/syrenka_hotpotai.png}
+    \caption{Zdjęcie poprawione -- po obróbce w Hotpot.ai.}
+\end{figure}
+
+\newpage
+\section{Porównanie zdjęć}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/jamnik_org.jpg}
+    \caption{Zdjęcie oryginalne.}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/jamnik_farfocle.png}
+    \caption{Zdjęcie z dodanymi farfoclami. }
+\end{figure}
+
+
+Na innych edytowanych przez nas zdjęciach nie pojawił się problem “farfocli”, więc w celu zweryfikowania jak nasz algorytm sobie poradził w walce z farfoclami ręcznie dodaliśmy farfocle na zdjęcie jamnika.
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/jamnik_PTI.png}
+    \caption{Zdjęcie poprawione naszym programem.}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/jamnik_farfocle_photoglory.png}
+    \caption{Zdjęcie poprawione za pomocą aplikacji PhotoGlory.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/jamnik_farfocle_hotpotai.png}
+    \caption{Zdjęcie poprawione w programie Hotpot.ai.}
+\end{figure}
+
+
+Nasze narzędzie, jak już prezentowaliśmy we wcześniejszych raportach, bardzo dobrze radzi sobie z usuwaniem farfocli, jednak w przypadku dużych farfocli na zdjęciu nadal pozostają ślady. W aplikacji PhotoGlory niestety zabrakło narzędzia dedykowanego do usuwania farfocli. Za to Hotpot.ai sobie z tym zadaniem bardzo dobrze poradziło, nawet lepiej niż nasze narzędzie, bo na zdjęciu nie zostały prawie żadne ślady.
+
+Pomimo tego, uważamy, że nasze narzędzie nadal wypada dobrze na tle AI ze względu na obawy użytkowników związane z AI. Także nasz program jest w pełni bezpłatny i umożliwia masowe przerabianie zdjęć w krótkim czasie, gdy AI przeznacza kilka minut na jedno zdjęcie.
+
+Niżej zdjęcia pokazane w celu dalszego porównanie narzędzi, specyfika narzędzi została opisana wyżej, dalsze wnioski z porównania wyciągniemy w następnej sekcji.
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci.png}
+    \caption{Zdjęcie dzieci -- oryginał.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci_gimp.png}
+    \caption{Zdjęcie dzieci -- poprawione w programie Gimp. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/dzieci_photoglory.png}
+    \caption{Zdjęcie dzieci -- poprawione w programie PhotoGlory.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci_hotpot.png}
+    \caption{Zdjęcie dzieci -- poprawione w programie Hotpot.ai.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/dzieci_PTI.png}
+    \caption{Zdjęcie dzieci -- poprawione w naszym programie. }
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb.png}
+    \caption{Zdjęcie pogrzebu -- oryginał.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb_gimp.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w programie Gimp. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/zdjecia po poprawie + tablica/nowe (dzieci jamnik i pogrzeb)/pogrzeb_photoglory.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w programie PhotoGlory. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb_hotpot.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w programie Hotpot. }
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, keepaspectratio]{Photos4/pogrzeb_PTI.png}
+    \caption{Zdjęcie pogrzebu -- poprawione w naszym programie.}
+\end{figure}
+
+
+\section{Podsumowanie}
+W porównaniu do innych narzędzi nasz program bardzo dobrze sobie radzi z wyostrzaniem zdjęć i naprawą kontrastu zdjęcia. Za to inne programy, zwłaszcza Hotpot.ai, odszumiają zdjęcia znacznie lepiej od naszego. GIMP to jedyne z narzędzi, które dobrze sobie radzi z usuwaniem zagięć. W kwestii farfocli najlepiej poradziło sobie Hotpot.ai, ale nasz program był niewiele gorszy.
+
+Atutem naszego programu jest prostota użycia i mała ilość czasu, którą trzeba przeznaczyć na obróbkę jednego zdjęcia. Również w żadnym innym programie nie było jednocześnie trybu automatycznego i możliwości ręcznego ustawiania parametrów, my oferujemy oba rozwiązania. Uważamy, że nasze narzędzie, pomimo pewnych ograniczeń, można uznać za konkurencyjne.
+
+
+
+
+
+
+
+
+\newpage
+\section{Dostępność programu}
+Na chwilę obecną nasze rozwiązanie jest zaawansowanym programem terminalowym,
+kompilowalnym na każdym systemie z dostępną i zainstalowaną biblioteką OpenCV oraz
+dowolnym kompilatorem języka C++ zdolnym do kompilacji na tym systemie lub jego pochodnym.
+
+Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
+pod adresem:
+\begin{center}
+    \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+\end{center}
+skąd można go łatwo pobrać, skompilować i wykorzystywać dowolnie (choć zgodnie z przeznaczeniem!).
+
+
+
+
+% \newpage
+\section{Wykorzystywane narzędzia}
+W tej części naszego projektu korzystaliśmy z następujących narzędzi:
+
+\begin{itemize}
+    \item Programu i języka Matlab -- do analizy zdjęć;
+    \item Języka C++ -- do napisania programu usuwającego artefakty;
+    \item Programu VS Code -- do tworzenia, edycji i dokumentacji kodu programu i raportów;
+    \item Programu LibreOffice Calc -- do analizy części danych numerycznych;
+    \item $\LaTeXe{}$ -- do przygotowania raportu;
+    \item Strony Github i programu Git -- do udostępniania, dystrybucji i pracy nad kodem;
+    \item 7zip -- do kompresji i dekompresji katalogów zdjęć;
+    \item Programów: GIMP, PhotoGlory i Hotpot.ai do edycji zdjęć w celu wykonania porównania narzędzi dostępnych na rynku z naszym programem;
+    \item Google Drive -- do udostępniania części dużych plików;
+    \item Skanera minilab Noritsu HS-1800 -- do w dalszej części wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
+    \item Aparatów:
+          \begin{itemize}
+              \item Canon EOS 300 z obiektywem Tamron 28-105mm 1:4-5.6 i kliszą Fomapan 400
+              \item Fujifilm FinePix L55 Digital Camera -- Black (12MP, 3x Optical Zoom)
+          \end{itemize}
+\end{itemize}
+
+
+\section{Podział obowiązków}
+Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
+
+\begin{itemize}
+    \item Bartosz Wójcik -- pisanie raportu.
+    \item Natalia Szymańska -- porównanie programu z dostępnymi narzędziami -- opis programów i różnic pomiędzy nimi. % hehe dostarczanie alkoholu członkom zespołu
+    \item Katarzyna Szwed -- korekta i pisanie raportu.
+    \item Aleksandra Wójcik -- porównanie programu z dostępnymi narzędziami -- poprawianie jakości zdjęć za pomocą tych narzędzi.
+    \item Karol Sęk -- tworzenie i rozwijanie algorytmu, poprawianie funkcjonalności programu.
+    \item Patrycja Szałajko -- porównanie programu z dostępnymi narzędziami -- opis programów i różnic pomiędzy nimi.
+    \item Michał Juszkiewicz -- tworzenie i rozwijanie algorytmu, poprawianie funkcjonalności programu.
+    \item Filip Sajko -- implementacja raportu w \LaTeXe{}.
+\end{itemize}
+
+
+\section{Bibliografia}
+
+\begin{enumerate}
+    \item Immerkær, J. (1996). Fast Noise Variance Estimation. Computer Vision and Image Understanding, doi:10.1006/cviu.1996.0060.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\part{}
+\thispagestyle{empty}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_uczelni.png}
+\end{figure}
+
+
+\begin{center}
+    {\LARGE \textbf{Poprawa jakości skanów zdjęć wykonanych techniką analogową
+        }} \\[0.3cm]
+    {\large \textbf{Raport V}} \\[0.2cm]
+    \textit{projekt realizowany pod opieką prof. dr hab. inż. Artura Przelaskowskiego}
+
+\end{center}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{wspolne_dla_wszystkich/logo_projektu.png}
+\end{figure}
+
+\vfill
+\begin{abstract}
+    Raport 5 projektu poprawy jakości cyfrowych skanów zdjęć wykonanych techniką analogową przez grupę nr 9 (wtorkową z godziny 18)
+    w składzie:  Bartosz Wójcik, Katarzyna Szwed, Natalia Szymańska,
+    Patrycja Szałajko, Aleksandra Wójcik, Karol Sęk, Michał Juszkiewicz, Filip Sajko.
+
+    W tym etapie przeprowadziliśmy eksperyment w celu weryfikacji użyteczności naszego programu - poprosiliśmy dwóch użytkowników o zdjęcia i zebraliśmy ich opinie na temat działania naszego narzędzia.
+\end{abstract}
+
+
+\newpage
+
+
+\section{Korekta}
+W związku z uwagami postanowiliśmy w ramach korekty do poprzednich raportów doprecyzować opis algorytmów zaimplementowanych w naszym projekcie.
+
+
+\subsection{Filtracja filtrem Gausowsskim}
+Operacja wykonuje splot zdjęcia z odpowiednim filtrem opartym na rozkładzie gaussowskim
+zależnym od parametrów podanych przez użytkownika. Celem tej operacji jest zredukowanie
+szumu zdjęcia.
+Operacja przyjmuje dwa argumenty: sigma i rozmiar maski. \newline
+
+Wartość sigmy wpływa na siłę rozmycia zdjęcia. Czym większa sigma, tym wartość funkcji w
+punkcie $(0,0)$ jest bliższa $0$. Dlatego rozmycie jest silniejsze dla większych wartości sigma.
+Rozmiar maski wyznacza wielkość obszaru w pobliżu piksela na którym wykonywany jest splot.
+W przedziale $[-3 \sigma, 3\sigma]$ znajduję się $99.73\%$ objętości
+rozkładu. Dla masek o rozmiarze większym niż $3\sigma$ wartości oddalone od centrum będą miały
+bardzo małe i nieznaczne wartości. Dlatego rozmiar maski nie powinien przekraczać $3\sigma$.
+Oczywiście rozmiar musi być liczbą nieparzystą. \newline
+
+Ostatecznie rozmiar maski i sigma powinny być dobrane w zależności do zdjęcia, zbyt duży
+rozmiar i wartość sigmy powodują utratę detali zdjęcia, a mała maska lub mała sigma nieznacznie
+zmniejszą szum zdjęcia. \newline
+
+Wady metody:
+\begin{itemize}
+    \item Ryzyko utraty detali.
+    \item Trudność w doborze parametrów (są bardzo zależne od zdjęcia, dla każdego powinny być inne).
+\end{itemize}
+
+\subsection{Filtracja filtrem bilateralnym}
+Operacja działa podobnie do wyżej opisanego filtru gaussowskiego. Wykonuje na zdjęciu splot z
+filtrem gaussowskim, różni się tym, że dla każdego piksela w masce jego wartość jest mnożona
+przez odpowiednią wagę. Dzięki takiemu działaniu metoda usuwa szum minimalnie rozmywając
+krawędzie zdjęcia.
+
+Waga zależna jest od różnicy pomiędzy wartościami pikseli w centrum i otoczeniu.
+
+Waga dla danego piskela jest wyrażona \footnote{Wzór pochodzi z pracy dostępnej pod linkiem: \url{https://www.ipol.im/pub/art/2011/bcm_nlm/article.pdf} }:
+\[w(i,j,k,l) = \exp \left(-\frac{(i-k)^2+(j-l)^2}{2\sigma^2}- \frac{||I(i,j) - I(k,l)||^2}{2\sigma^2}\right)\]
+Gdzie:
+\begin{itemize}
+    \item $i,j$ -- współrzędne piksela w centrum
+    \item $k,l$ -- współrzędne piksela w otoczeniu, dla którego liczona jest wag
+    \item $\sigma$ -- parametr podany przez użytkownika, standardowe odchylenie rozkładu gaussowskiego (patrz filtr gaussowski)
+    \item $I(x,y)$ -- funkcja zwracająca wartość piksela na danych współrzędnych x i y. Oczywiście dla (i,j) = (k,l) waga = 1. Operacja przyjmuje dwa argumenty: sigma i rozmiar maski, powinny one być dobrane zgodnie z sugestiami opisanymi w (filtr gaussowski).
+\end{itemize}
+\newpage
+
+
+Zalety metody wobec filtru gaussowskiego:
+\begin{itemize}
+    \item Mniejsze ryzyko utraty krawędzi i detali zdjęcia.
+\end{itemize}
+
+Wady metody wobec filtru gaussowskiego:
+\begin{itemize}
+    \item Zdjęcia zawierające zbyt dużo detali i krawędzi będą nieczułe na działanie filtra.
+    \item Zdjęcia przetworzone tym filtrem często wyglądają `kreskówkowo'.
+\end{itemize}
+
+
+\subsection{Usuwanie szumu uśrednianiem pikseli}
+Operacja polega na obliczeniu nowej wartości dla danego piskela, która powinna mieć
+zredukowany szum. Jeśli dla danego piksela znajdziemy $9$ pikseli o bliskiej wartości i obliczymy
+ich średnią to odchylenie standardowe szumu powinno być zredukowane $3$-krotnie. Operacja
+poszukuje w zdjęciu jak najwięcej bliskich wartościowo pikseli i liczy ich średnią ważoną.
+
+Nowa wartość piksela jest obliczana wzorem\footnote{Wzór pochodzi z pracy dostępnej pod linkiem: \url{https://www.ipol.im/pub/art/2011/bcm_nlm/article.pdf} }:
+\[ \hat{u}_i(p) = \frac{1}{C(p)} \sum_{q \in B(p, r)} u_i(q) \, w(p, q)\]
+\[ C(p) = \sum_{q \in B(p,q)}^{}w(p,q) \]
+\[ w(p,q) = \exp(-\frac{\max (d^2-2\sigma^2, 0.0)}{h^2})\]
+
+Gdzie:
+\begin{itemize}
+    \item $B(p,r)$ -- otoczenie piksela p w promieniu r, r -- ustalone na $21$\footnote{czym większe otoczenie tym teoretycznie efektywność filtru byłaby lepsza, niestety już dla $r=21$ operacja zajmuje bardzo dużo czasu, dla większego okna byłaby jeszcze wolniejsza.}.
+    \item $u_i(q)$ -- funkcja zwracająca wartość piksela q.
+    \item $d(p, q)$ -- odległość euklidesowa pomiędzy pikselami p a q.
+    \item $\sigma$ -- odchylenie standardowe.
+    \item $h$ -- parametr filtrowania.
+\end{itemize}
+
+Operacja przyjmuje jeden argument: $h$ -- parametr filtrowania.
+Wartość $h$ wpływa na wartości sigma użyta we wzorze.
+Parametr spełnia zależność $h = k\sigma$. Wartość $k$ dopasowywana jest dynamicznie. Czym
+większa odległość pomiędzy pikselami tym wartość $k$ jest mniejsza, sigma więc rośnie.
+Czym większa wartość $h$ tym filtr będzie silniejszy, ale zwiększa się też ryzyko utraty detali.
+Dobrą wartością początkową jest $15.0$\footnote{Wyznaczona empirycznie, jest to tylko sugestia.}, następnie w zależności od zdjęcia należy ją zwiększyć lub
+zmniejszyć. \newline
+
+
+
+Wady metody:
+\begin{itemize}
+    \item Ryzyko utraty detali.
+    \item Czasochłonność.
+    \item Niejednolita efektywność, dla niektórych zdjęć zmiana jest niezazauważalna.
+
+\end{itemize}
+Zalety metody wobec filtru gaussowskiego i bilateralnego:
+\begin{itemize}
+    \item Lepszy stosunek redukcji szumu do rozmazania zdjęcia.
+\end{itemize}
+
+
+
+
+\subsection{Wyostrzanie maską wyostrzającą (unsharp masking)}
+Operacja ma na celu wyostrzenie krawędzi i detali zdjęcia. Mając ostre zdjęcie możemy je
+rozmazać stosując rozmycie gaussowskie, można więc założyć, że wykonując operacje odwrotną do
+rozmazania gaussowskiego, efekt będzie odwrotny do rozmycia, wyostrzenie. Na tej zasadzie
+polega metoda unsharp masking. Odejmuje od wartości pikseli oryginalnego zdjęcia wartości
+pikseli po rozmyciu.
+
+Operacja przyjmuje dwa argumenty: sigma i rozmiar maski, analogicznie do (filtru gaussowskiego).
+Teoretycznie większe rozmazanie zdjęcia powinno bardziej wyostrzyć zdjęcie, należy więc dobierać
+większe wartości sigma (przynajmniej $>1$). \newline
+
+Wady metody:
+\begin{itemize}
+    \item Trudność w doborze parametrów (są bardzo zależne od zdjęcia, dla każdego powinny być inne).
+    \item Właściwie operacja rozmazywania zdjęcia jest nieodwracalna, metoda może mieć różne efekty.
+\end{itemize}
+
+
+
+
+
+\newpage
+\section{Metodyka eksperymentu}
+
+Głównym celem naszego programu było podniesienie jakości cyfrowych skanów starych fotografii analogowych. Szczególnie zależało nam na poprawie tych ujęć, które charakteryzują się niepoprawną ekspozycją -- zawierających obszary silnie prześwietlone, gdzie detale zostały praktycznie `wypalone' przez nadmiar światła lub fragmenty głęboko niedoświetlone, w których szczegóły giną w jednolitej czerni. Zmierzyliśmy się również z „farfoclami", czyli artefaktami powstałymi w procesie wywoływania i skanowania zdjęć. Postanowiliśmy przetestować nasz program w realnych warunkach, dlatego poprosiliśmy dwóch ochotników o użycie go na ich własnych materiałach fotograficznych. \newline
+
+Pierwszy użytkownik jest pasjonatem fotografii analogowej. Nasze narzędzie wydało mu się ciekawy i z chęcią przyłączył się do testowania, gdyż jak każdy początkujący fotograf-amator miał wiele sytuacji, gdy na żywo zaobserwował interesującą scenę, którą chciał uchwycić w obiektywie, lecz nie miał wystarczająco dobrych warunków, aby wykonać dobre jakościowo zdjęcia. Widać to na zdjęciach pociągu, gdzie podziemia utrudniły uchwycenie sceny w odpowiednim świetle. Nasz użytkownik dzięki naszemu programowi miał nadzieję na uratowanie mocno niedoświetlonego zdjęcia i nasz program dawał perspektywy nie tylko na poprawę dostarczonych zdjęć, ale również dawał perspektywę na rozszerzenie zakresu fotografowanych scenerii o miejsca, które wcześniej wydawały się niedostępne ze względu na brak odpowiednich warunków. \newline
+
+Celem drugiej użytkowniczki jest naprawa starych zdjęć rodzinnych. Nasz program mógłby jej pomóc w obróbce fotografii z albumów, zwłaszcza, że dopiero zaczyna z obróbką zdjęć i jeszcze nie umie dobrze obsługiwać zaawansowanych programów, np. Gimpa. Też jej się bardzo nie podoba czas, który musi spędzić na obróbkę jednego zdjęcia przy użyciu innych programów, podczas gdy przeróbka jednego obrazu w naszym programie trwa kilka minut. \newline
+
+Skany zdjęć użytkowników zostały przerobione za pomocą metody adaptacyjnej dostępnej w naszym programie. Następnie użytkownicy ocenili jej efekty w skali od -3 do 3 i wyrazili swoje opinie na temat naszego narzędzia.
+
+
+% \begin{figure}[h!]
+%     \centering
+%     \begin{subfigure}[b]{0.49\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Photos5/}
+%         \caption{Przed.}
+%         %     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.49\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Photos5/}
+%         \caption{Po działaniu programu.}
+%         %     \end{subfigure}
+%     \caption{Zdjęcie budynku. Ocena użytkownika:    }
+%     % \end{figure}
+
+
+
+\newpage
+\section{Test}
+\subsection{Użytkownik 1}
+
+\subsubsection{Zdjęcia}
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/budynek1.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/budynek1_po.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie budynku. Ocena użytkownika: 0}
+\end{figure}
+Zdjęcie oryginalne przed obróbką jest niedoświetlone i trudne jest rozróżnienie detali. Po obróbce jest bardziej czytelne, ale nie jest estetycznie akceptowalne. Poziom zakłóceń i szumów powoduje, że efekt finalny nie jest przyjemny dla oka. Zarysowania na zdjęciu są nadal widoczne po obróbce, jednak wtapiają się w inne szumy. Zważając na to, że zdjęcie wejściowe jest niskiej jakości, efekt wyjściowy w innych programach również nie byłby dużo lepszy.
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/pociag.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/pociag_po1.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie pociągu. Ocena użytkownika: 1    }
+\end{figure}
+Efekt obróbki tego zdjęcia jest bardzo podobny jak do poprzedniego. Szum znacząco pogarsza odbiór zdjęcia. Filtr działałby lepiej, gdyby wybierał obszary zdjęcia, w których da się coś poprawić. Front pociągu w oryginale jest niedoświetlony do tego stopnia, że filtr jedynie powoduje wprowadzenie dużego poziomu szumów. Zdjęcie zyskuje na czytelności, filtr wydobył detale, które ciężko było odróżnić na oryginale.
+
+
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[angle=-90, width=\textwidth]{Photos5/użytkownik 1 (bartek)/drzwi.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/drzwi_po1.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie drzwi. Ocena użytkownika:  2  }
+\end{figure}
+Ze wszystkich zdjęć danych do obróbki, jakość po filtracji jest najwyższa dla tego zdjęcia. Zdjęcie jest wyraźnie jaśniejsze oraz poziom szumu jest akceptowalny. Efekty w cieniach są lepsze, niż na innych zdjęciach. Niestety zdjęcie po obróbce wydaje się prześwietlone w jasnych punktach. Filtr zaaplikowany na tym zdjęciu jest zbyt ekstremalny, zdjęcie potrzebowało tylko lekkiej korekty histogramu, by poszerzyć rozpiętość tonalną. \newline
+
+Filtr działał podobnie dla reszty zdjęć, stąd brak komentarza dla efektów dla każdego z nich.
+\newpage
+
+
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[angle=90, width=\textwidth]{Photos5/użytkownik 1 (bartek)/cos.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[angle=90, width=\textwidth]{Photos5/użytkownik 1 (bartek)/cos_po1.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie czegoś. Ocena użytkownika: 2    }
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/peron1.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/peron1_po.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie peronu. Ocena użytkownika: 0   }
+\end{figure}
+
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/schody.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/schody_po1.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie schodów. Ocena użytkownika:  1  }
+\end{figure}
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/wejscie.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 1 (bartek)/wejscie_po1.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie wejścia. Ocena użytkownika:  2  }
+\end{figure}
+
+
+
+\newpage
+\subsubsection{Komentarz ogólny}
+Filtr dobrze radzi sobie z polepszeniem czytelności zdjęcia, jednak nie nadaje się do obróbki w celach estetycznych. Szum powodowany przez filtr jest zbyt duży, filtr nie selekcjonuje obszarów do poprawy. Skutkuje to zaszumionymi cieniami oraz prześwietlonymi punktami, które poprawy nie wymagały. Program przy odpowiednim rozwoju mógłby poradzić sobie lepiej z ekstremalnymi przypadkami.
+
+
+
+
+
+\newpage
+\subsection{Użytkowniczka 2}
+
+\subsubsection{Zdjęcia}
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[angle=-90, width=\textwidth]{Photos5/użytkownik 2 (ola)/choinka.png}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[angle=-90, width=\textwidth]{Photos5/użytkownik 2 (ola)/choinka_po1.png}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie dzieci i choinki. Ocena użytkownika:  1.25  (spodziewałam się lepszych efektów, ale zdjecie jest ostrzejsze i widać zmianę)}
+\end{figure}
+Widać różnicę. Postacie są bardziej widoczne przez zwiększony kontrast, jednak wciąż jestem w stanie dostrzec lekkie zagięcia oryginalnego zdjęcia, a także farfocel, który na oryginalnym zdjęciu najbardziej przykuwał moją uwagę i chciałam się go pozbyć (ten na ręce starszej dziewczynki). Zdjęcie jest ostrzejsze, jednak kolory w miarę są zbalansowane i nie widać szumu.
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 2 (ola)/idk.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Photos5/użytkownik 2 (ola)/idk_po.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie ogrodu. Ocena użytkownika:  2 (niby mała różnica, ale mnie zadowoliła i spełniła moje oczekiwania, zdecydowanie ułatwi mi dalszą pracę nad tym zdjęciem)  }
+\end{figure}
+Na zdjęciu widać poprawę. Nie widzę szumu, zniknęły farfocle, które przeszkadzały mi na poprzednim zdjęciu. Jako ewentualny drobny minus zauważyłam, że część białych spodenek mężczyzny została uznana za farfocel i przez to pojawiła się na nich maleńka ciemna plama. Też fajnie jakby zniknęło zagięcie, lecz już poradzę sobie z tym sama. Ważne, że małe farfocle usunęło - bardzo ułatwi mi to pracę nad samodzielnym dalszym retuszem tego zdjęcia.
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[angle=90, width=\textwidth]{Photos5/użytkownik 2 (ola)/pradziadkowieuwu.jpg}
+        \caption{Przed.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \centering
+        \includegraphics[angle=90, width=\textwidth]{Photos5/użytkownik 2 (ola)/pradziadkowieuwu_po.jpg}
+        \caption{Po działaniu programu.}
+    \end{subfigure}
+    \caption{Zdjęcie pradziadków. Ocena użytkownika: 1.75  (małe różnice, ale dają wystarczający efekt by można było to uznać za poprawę) }
+\end{figure}
+Widać różnicę, ładnie wyrównaliście kolory w tle przez co to zdjęcie wygląda na gładsze. Dodatkowo zniknął farfocel na środku, który przykuwał wcześniej moją uwagę, więc nowe zdjęcie zyskało na jakości. Na minus jest to, że wciąż widać jakieś plamy na ubraniach postaci na dole.
+
+
+
+
+\subsubsection{Komentarz ogólny}
+Narzędzie zdecydowanie poprawia jakość zdjęcia. W miarę dobrze radzi sobie z usuwaniem farfocli i wyostrzaniem. Widzę potencjał na rozbudowę programu by można było np. usuwać zagięcia. Na razie jest to dobre narzędzie, z którego można korzystać przy edycji zdjęć - najpierw przepuścić przez program, żeby pozbyć się farfocli i wyostrzyć, a potem samemu dokończyć edycję zdjęć aby uzyskać jak najlepszy efekt. Na pewno to narzędzie bardzo skraca czas spędzony na przeróbce zdjęcia, często nad zdjęciami siedzę godzinami w gimpie i męczę się z edycją… Zdecydowanie otrzymanie takiego wstępnie przerobionego zdjęcia przyspieszyłoby mi robotę.
+
+
+
+\newpage
+\section{Wnioski}
+Przetworzone zdjęcia użytkowników oraz ich oceny ukazały wady oraz zalety działania naszego programu.\newline
+
+Użytkownik 1 przyznał, że pomimo większej ilości widocznych detali dzięki rozjaśnieniu i wyostrzeniu zdjęcia nie podobają mu się efekty uzyskane przez nasze narzędzie. Skrytykował fakt, że wszystkie obszary, nawet te, które tego nie potrzebowały, zostały rozjaśnione. Uważa też, że działanie filtru było zbyt mocne - dobrane wartości filtrów są zbyt ekstremalne dla zdjęć, które wymagają lekkiej korekty. Również nie podobała mu się ilość szumu dodanego przez filtr, co jest głównym powodem dlaczego Użytkownik 1 stwierdził, że nie skorzystałby z naszego narzędzia. Najważniejsza dla niego jest estetyka zdjęcia i nie może uznać takiego poziomu szumu za akceptowalny wynik. \newline
+
+Użytkowniczce 2 dużo bardziej spodobał się nasz program. Uznała, że na przerobionych zdjęciach widać poprawę - są one ostrzejsze, kolory są bardziej wyrównane i, co najważniejsze, zniknęły uporczywe farfocle. Zauważyła też wady w naszym rozwiązaniu - nasz program nie usuwa wszystkich farfocli lub czasem usuwa te fragmenty, które nimi nie są. Przeszkadzało jej też to, że nasz program nie radzi sobie dobrze z usuwaniem zagięć. Użytkowniczka stwierdziła, że nasze narzędzie dobrze radzi sobie z tymi aspektami obróbki zdjęcia, które sprawiały jej największą trudność. Nasze narzędzie pozwoliło jej oszczędzić trochę czasu pomimo tego, że wynik uzyskany przez nasz program nie jest tym ostatecznym i zdjęcia nadal wymagają dalszej obróbki w innym programie.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Średnia      & Wartość \\ \hline
+        Użytkownik 1 & 1.14    \\ \hline
+        Użytkownik 2 & 1.67    \\ \hline
+        Sumaryczna   & 1.40    \\ \hline
+    \end{tabular}
+    \caption{Średnie oceny działania programu.}
+\end{table}
+
+Tym co zdecydowanie wymaga poprawy w naszym programie jest usuwanie szumu i ilość szumu wprowadzana do zdjęcia przez nasze algorytmy. Również w naszym programie zabrakło opcji zlokalizowania filtru - wszystkie w naszym narzędziu działa globalnie, na całym zdjęciu, nie tylko na jego fragmencie. Dobrym pomysłem byłoby również dodanie algorytmu wyspecjalizowanego w usuwaniu zagięć. Ogółem nasze narzędzie poradziło sobie dobrze z mało ekstremalnymi przypadkami - im ciemniejsze/mniej ostre zdjęcie tym więcej szumu wprowadzają nasze filtry. Nasz program również bardzo dobrze sobie radzi z wydobywaniem ukrytych detali. Znaleźliśmy również zastosowanie dla naszego programu - umożliwia on sprawne i skuteczne usunięcie farfocli oszczędzając użytkownikowi dużo czasu.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\section{Dostępność programu}
+Na chwilę obecną nasze rozwiązanie jest zaawansowanym programem terminalowym,
+kompilowalnym na każdym systemie z dostępną i zainstalowaną biblioteką OpenCV oraz
+dowolnym kompilatorem języka C++ zdolnym do kompilacji na tym systemie lub jego pochodnym.
+
+Program dostępny jest na licencji \textit{open source} i jego kod źródłowy można znaleźć na GitHubie
+pod adresem:
+\begin{center}
+    \url{https://github.com/ssk12o/PTI-Foto-Projekt}.
+\end{center}
+skąd można go łatwo pobrać, skompilować i wykorzystywać dowolnie (choć zgodnie z przeznaczeniem!).
+
+
+
+
+% \newpage
+\section{Wykorzystywane narzędzia}
+W tej części naszego projektu korzystaliśmy z następujących narzędzi:
+
+\begin{itemize}
+    \item Programu i języka Matlab -- do analizy zdjęć;
+    \item Języka C++ -- do napisania programu usuwającego artefakty;
+    \item Programu VS Code -- do tworzenia, edycji i dokumentacji kodu programu i raportów;
+    \item Programu LibreOffice Calc -- do analizy części danych numerycznych;
+    \item $\LaTeXe{}$ -- do przygotowania raportu;
+    \item Strony Github i programu Git -- do udostępniania, dystrybucji i pracy nad kodem;
+    \item 7zip -- do kompresji i dekompresji katalogów zdjęć;
+    \item Programów: GIMP, PhotoGlory i Hotpot.ai do edycji zdjęć w celu wykonania porównania narzędzi dostępnych na rynku z naszym programem;
+    \item Google Drive -- do udostępniania części dużych plików;
+    \item Skanera minilab Noritsu HS-1800 -- do w dalszej części wykonywania wysokiej jakości cyfrowych skanów zdjęć wykonanych techniką analogową;
+    \item Aparatów:
+          \begin{itemize}
+              \item Canon EOS 300 z obiektywem Tamron 28-105mm 1:4-5.6 i kliszą Fomapan 400
+              \item Fujifilm FinePix L55 Digital Camera -- Black (12MP, 3x Optical Zoom)
+          \end{itemize}
+\end{itemize}
+
+
+\section{Podział obowiązków}
+Na tym etapie projektu podzieliśmy się pracą, obowiązkami i zadaniami w następujący sposób:
+
+\begin{itemize}
+    \item Bartosz Wójcik -- zebranie komentarzy użytkowników.
+    \item Natalia Szymańska -- opisanie eksperymentu i wyciągniętych wniosków, korekta. % hehe dostarczanie alkoholu członkom zespołu
+    \item Katarzyna Szwed -- opisanie eksperymentu i wyciągniętych wniosków, korekta.
+    \item Aleksandra Wójcik -- zebranie komentarzy użytkowników.
+    \item Karol Sęk -- dokładny opis algorytmów.
+    \item Patrycja Szałajko -- opisanie eksperymentu i wyciągniętych wniosków, korekta.
+    \item Michał Juszkiewicz -- dokładny opis algorytmów.
+    \item Filip Sajko -- implementacja raportu w \LaTeX{}.
+\end{itemize}
+
+
+
+
+
 
 
 
